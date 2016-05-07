@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{234E37AC-DD3E-47AF-8A51-652CC5525B57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6B16F87-FD16-4830-8B85-A66E42C09279}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IndoorCricket", "src\IndoorCricket\IndoorCricket.xproj", "{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E45CEBA7-6E29-4F8F-AEF3-410B51A5D58B} = {234E37AC-DD3E-47AF-8A51-652CC5525B57}
+	EndGlobalSection
+EndGlobal
