@@ -36,8 +36,8 @@ gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("copyapp", function () {
     var app = {
-        "controllers": "controllers/**.js",
-        "services": "services/**.js",
+        "collections": "collections/**.js",
+        "views": "views/**.js",
         "models": "models/**.js",
         "/": "**.js"
     }

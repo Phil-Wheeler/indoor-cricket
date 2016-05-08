@@ -22,7 +22,7 @@ namespace IndoorCricket.Controllers
         [HttpGet]
         public IEnumerable<Game> GetGame()
         {
-            return _context.Game;
+            return _context.Game.Include(x => x.Team);
         }
 
         // GET: api/Games/5

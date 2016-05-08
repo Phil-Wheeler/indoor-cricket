@@ -11,7 +11,7 @@ namespace IndoorCricket.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
         public string Opposition { get; set; }
 
         public virtual ICollection<Over> Overs { get; set; }

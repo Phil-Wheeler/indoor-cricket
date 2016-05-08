@@ -1,5 +1,88 @@
 ﻿
+<script type="text/template" id="tpl-games">
+    <h2 class="page-header text-center">List of games</h2>
+    <ul class="media-list row games-container"></ul>
+</script>
+
+<script type="text/template" id="tpl-game">
+    <div class="thumbnail">
+        <img class="media-object" src="app/img/faces/<%- id %>">
+    </div>
+    <div class="media-heading">
+        <h3>
+            <%- Team %>
+        </h3>
+    </div>
+    <div class="media-body">
+        <dl>
+            <dt>Date:</dt>
+            <dd><%- Date %></dd>
+            <dt>Opposition:</dt>
+            <dd><%- Opposition %></dd>
+        </dl>
+    </div>
+    <hr>
+</script>
 
 <div class="row">
-    <div ng-view></div>
+    <div class="games" data-template="games">
+    </div>
 </div>
+
+
+
+
+@section scripts
+{
+
+    <script>
+        $(function () {
+            Cricket.start({
+                games: $.getJSON('/api/games')
+            });
+
+            //Cricket.start({
+            //    games: [
+            //{
+            //    id: 1,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Team Vas'
+            //},
+            //{
+            //    id: 2,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Miller Studios'
+            //},
+            //{
+            //    id: 3,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Sledgehammers'
+            //},
+            //{
+            //    id: 4,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Howzat'
+            //},
+            //{
+            //    id: 5,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Sledgehammers'
+            //},
+            //{
+            //    id: 6,
+            //    date: '11/05/2016',
+            //    team: 'Yellow Duckies',
+            //    opposition: 'Miller Studios'
+            //}
+            //    ],
+            //    url: '/api/games'
+            //});
+
+        });
+    </script>
+}
