@@ -4,12 +4,20 @@
         <h2>Games</h2>
     </div>
 </div>
-<div class="row" ng-app="Cricket">
-    <div class="col-md-12" ng-controller="game_controller">
-        <h3>{{title}}</h3>
+<div class="row" ng-controller="game_controller">
+    <div class="col-md-3">
+        <h3 ng-hide="!working">{{title}}</h3>
         <ul ng-repeat="game in games">
-            <li>{{game.Date}}: {{game.Opposition}}</li>
+            <li ng-click="getGame(game.Id)"><span ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span>: {{game.Opposition}}</li>
         </ul>
+    </div>
+    <div class="col-md-9">
+        <div id="game-overs" ng-model="selected">
+            <h4>{{over.Innings ? "Bowling" : "Batting"}}</h4>
+            <ol>
+                <li ng-repeat="over in selected.Overs">{{over.Number}}</li>
+            </ol>
+        </div>
     </div>
 </div>
 

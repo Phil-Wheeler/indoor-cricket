@@ -22,7 +22,7 @@ namespace IndoorCricket.Controllers
         [HttpGet]
         public IEnumerable<Game> GetGame()
         {
-            return _context.Game.Include(x => x.Team);
+            return _context.Games.Include(x => x.Team);
         }
 
         // GET: api/Games/5
@@ -34,12 +34,12 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            Game game = _context.Game.Single(m => m.Id == id);
-            var battingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
+            Game game = _context.Games.Include(o => o.Overs).FirstOrDefault(g => g.Id == id);
+            //var battingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
 
-            var battingScore = battingOvers.SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
-            var bowlingScore = game.Overs.Where(o => o.Innings == Innings.Bowling)
-                .SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
+            //var battingScore = battingOvers.SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
+            //var bowlingScore = game.Overs.Where(o => o.Innings == Innings.Bowling)
+            //    .SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
 
             if (game == null)
             {
@@ -93,7 +93,7 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            _context.Game.Add(game);
+            _context.Games.Add(game);
             try
             {
                 _context.SaveChanges();
@@ -122,13 +122,13 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            Game game = _context.Game.Single(m => m.Id == id);
+            Game game = _context.Games.Single(m => m.Id == id);
             if (game == null)
             {
                 return HttpNotFound();
             }
 
-            _context.Game.Remove(game);
+            _context.Games.Remove(game);
             _context.SaveChanges();
 
             return Ok(game);
@@ -145,7 +145,7 @@ namespace IndoorCricket.Controllers
 
         private bool GameExists(int id)
         {
-            return _context.Game.Count(e => e.Id == id) > 0;
+            return _context.Games.Count(e => e.Id == id) > 0;
         }
     }
 }

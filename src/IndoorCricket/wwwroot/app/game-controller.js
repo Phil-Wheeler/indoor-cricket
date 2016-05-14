@@ -14,12 +14,29 @@
         
         $scope.title = "Loading games...";
         $scope.games = [];
+        $scope.selected = {};
+        $scope.working = true;
 
         $http.get('/api/games').success(function (data, status, headers, config) {
             $scope.games = data;
+            $scope.working = false;
         }).error(function (data, status, headers, config) {
             $scope.title = 'catastrophic failure';
+            $scope.working = true;
         });
+
+        $scope.getGame = function (id) {
+            
+            $http.get('/api/games/' + id).success(function (data, status, headers, config) {
+                $scope.selected = data;
+                console.info(data.Overs);
+                console.info($scope.selected);
+                $scope.working = false;
+            }).error(function (data, status, headers, config) {
+                $scope.title = "failed to find that game";
+                $scope.working = true;
+            })
+        }
 
         $scope.newGame = function (gameData) {
             $http.post('/api/games', { 'Id': null, 'Date': new Date(), 'Opposition': "Testing" }).success(function (data, status, headers, config) {

@@ -8,6 +8,7 @@
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
             <link rel="stylesheet" href="~/css/site.css" />
+            <link href="~/css/wrap.css" rel="stylesheet" />
         </environment>
         <environment names="Staging,Production">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -16,7 +17,7 @@
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         </environment>
     </head>
-    <body>
+    <body ng-app="Cricket">
         <div class="navbar">
             <div class="container">
                 <div class="navbar-header">
@@ -26,7 +27,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">IndoorCricket</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -40,6 +40,11 @@
             </div>
         </div>
         <div class="container body-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1><a asp-controller="Home" asp-action="Index" class="">Indoor Cricket</a></h1>
+                </div>
+            </div>
             @RenderBody()
             <hr />
         </div>

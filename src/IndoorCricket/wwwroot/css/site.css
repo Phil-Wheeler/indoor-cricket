@@ -1,7 +1,8 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
+
+h1 { margin-bottom: 1em; }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -17,15 +18,19 @@ textarea {
     max-width: 280px;
 }
 
-/* Carousel */
-.carousel-caption {
-    z-index: 10 !important;
-}
+.dl-horizontal dt { float: left; text-align: left; width: 90px; }
+.dl-horizontal dd { margin-left: 100px; }
 
-    .carousel-caption p {
-        font-size: 20px;
-        line-height: 1.4;
-    }
+
+/* ====== SCORESHEETS ====== */
+.scoresheet-table tbody td { background: #fff; }
+.scoresheet-table tbody td span { font-weight: bold; }
+.scoresheet-delivery { display: table-cell; width: 1em; }
+.score-panel tbody td { text-align: center; }
+.score-panel tfoot th { vertical-align: middle; }
+
+.player-picklist { margin: 2px 5px 5px 0; }
+
 
 @media (min-width: 768px) {
     .carousel-caption {

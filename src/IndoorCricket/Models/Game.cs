@@ -24,7 +24,7 @@ namespace IndoorCricket.Models
         public int Number { get; set; }
         public Innings Innings { get; set; }
 
-        public virtual Game Game { get; set; }
+        //public virtual Game Game { get; set; }
         public virtual ICollection<Delivery> Deliveries { get; set; }
     }
 
