@@ -35,7 +35,8 @@ namespace IndoorCricket.Controllers
             }
 
             //Over over = _context.Over.Single(m => m.Id == id);
-            IEnumerable<Over> overs = _context.Games.FirstOrDefault(g => g.Id == id).Overs;
+            //IEnumerable<Over> overs = _context.Games.FirstOrDefault(g => g.Id == id).Overs;
+            Game overs = _context.Games.FirstOrDefault();
 
             if (overs == null)
             {
@@ -47,19 +48,19 @@ namespace IndoorCricket.Controllers
 
         // PUT: api/Overs/5
         [HttpPut("{id}")]
-        public IActionResult PutOver(int id, [FromBody] Over over)
+        public IActionResult PutOver(int id, [FromBody] int over)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            if (id != over.Id)
-            {
-                return HttpBadRequest();
-            }
+            //if (id != over.Id)
+            //{
+            //    return HttpBadRequest();
+            //}
 
-            _context.Entry(over).State = EntityState.Modified;
+            //_context.Entry(over).State = EntityState.Modified;
 
             try
             {

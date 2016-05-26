@@ -151,25 +151,25 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><button class="btn btn-primary" ng-click="playShot('Seven', 7)">7</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Five', 5)">5</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Four', 4)">4</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Three', 3)">3</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(7, 7)">7</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(5, 5)">5</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(4, 4)">4</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(3, 3)">3</button></td>
                         </tr>
                         <tr>
-                            <td><button class="btn btn-primary" ng-click="playShot('Two', 2)">2</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Single', 1)">1</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Dotball', 0)">0</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Wide', 2)" title="Wide">W</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(2, 2)">2</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(1, 1)">1</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(0, 0)">0</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(0, 2)" title="Wide">W</button></td>
                         </tr>
                         <tr>
-                            <td><button class="btn btn-primary" ng-click="playShot('Caught', -5)" title="Caught">C</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Bowled', -5)" title="Bowled">B</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Runout', -5)" title="Run out">R</button></td>
-                            <td><button class="btn btn-primary" ng-click="playShot('Stumped', -5)" title="Stumped">S</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(1, -5)" title="Caught">C</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(2, -5)" title="Bowled">B</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(4, -5)" title="Run out">R</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(8, -5)" title="Stumped">S</button></td>
                         </tr>
                         <tr>
-                            <td><button class="btn btn-primary" ng-click="playShot('Mankad', -5)" title="Mankad">M</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot(16, -5)" title="Mankad">M</button></td>
                             <td style="vertical-align: middle;">Runs</td>
                             <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" value="{{runs}}" /></td>
                         </tr>

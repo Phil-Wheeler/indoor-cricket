@@ -20,7 +20,6 @@ namespace IndoorCricket.Models
         public DbSet<Team> Teams { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Player> Players { get; set; }
-        public DbSet<Shot> Shots { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Over> Overs { get; set; }
     }
