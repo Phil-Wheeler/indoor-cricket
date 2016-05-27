@@ -5,6 +5,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using IndoorCricket.Models;
 using System;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace IndoorCricket.Controllers
 {
@@ -82,21 +84,25 @@ namespace IndoorCricket.Controllers
 
         // POST: api/Teams
         [HttpPost]
-        public IActionResult PostTeam([FromBody] Team team)
+        public IActionResult PostTeam([FromBody] object team)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            _context.Teams.Add(team);
+            JObject obj = JsonConvert.DeserializeObject<JObject>(team.ToString());
+            Team newTeam = obj.Root.First.Value<JToken>().First.ToObject<Team>();
+
+            _context.Teams.Add(newTeam);
+
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (TeamExists(team.Id))
+                if (TeamExists(newTeam.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -106,7 +112,7 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetTeam", new { id = team.Id }, team);
+            return CreatedAtRoute("GetTeam", new { id = newTeam.Id }, newTeam);
         }
 
         // DELETE: api/Teams/5

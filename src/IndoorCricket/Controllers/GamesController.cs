@@ -80,7 +80,7 @@ namespace IndoorCricket.Controllers
 
             try
             {
-                _context.SaveChanges(true);
+                //_context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {

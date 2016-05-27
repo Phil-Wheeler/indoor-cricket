@@ -4,6 +4,7 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using IndoorCricket.Models;
+using System;
 
 namespace IndoorCricket.Controllers
 {
@@ -16,6 +17,14 @@ namespace IndoorCricket.Controllers
             _context = context;
         }
 
+        public IActionResult Index(Guid id)
+        {
+            var model = _context.Games
+                .Include(t => t.Team)
+                .Where(g => g.Team.Id == id);
+
+            return View(model);
+        }
 
         public IActionResult Game(int Id)
         {

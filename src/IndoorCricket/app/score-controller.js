@@ -24,6 +24,8 @@
         $scope.shot = 0;
         $scope.runs = 0;
         $scope.working = true;
+        $scope.opener = {};
+        $scope.runner = {};
 
         $scope.getTeam = function (teamId, gameId) {
             $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
@@ -43,6 +45,17 @@
         }
 
         $scope.playShot = function (shot, runs) {
+            var table = $('#scoresheet-table')[0];
+            var strikerRow = $('tbody tr:first', table);
+
+            if ($scope.opener.Player == undefined) {
+                $scope.opener.Player = $scope.striker;
+                $scope.opener.Score = 0;
+                $scope.runner.Player = $scope.nonstriker;
+                $scope.runner.Score = 0;
+            }
+            $scope.opener.Score += runs;
+            strikerRow.css('border', '1px solid red');
             $scope.shot = shot;
             $scope.runs = runs;
             $('#run-value', $element)[0].value = (runs);
