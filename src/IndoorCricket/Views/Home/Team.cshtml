@@ -1,0 +1,179 @@
+@{
+    ViewData["Title"] = "Team";
+}
+
+<div class="row" ng-controller="team_controller" ng-init="Get">
+    <div class="col-md-2">
+        <h3>Teams</h3>
+        <ul id="team-list">
+
+        </ul>
+
+        @*<ul class="list-unstyled list-inline">
+            <li ng-repeat="player in team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
+        </ul>*@
+    </div>
+    <div class="col-md-7">
+        <h3>Game vs. Model.Opposition</h3>
+
+        <div class="widget">
+
+            <div class="widget-head">
+                <div class="pull-left">Batting</div>
+            </div>
+            <div class="widget-content">
+                <table class="scoresheet-table table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Over One</th>
+                            <th>Over Two</th>
+                            <th>Over Three</th>
+                            <th>Over Four</th>
+                            <th>Partnership Totals</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Phil</th>
+                            <td>
+                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
+                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
+                                <span class="scoresheet-delivery"></span>
+                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
+                            </td>
+                            <td>
+                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
+                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
+                                <span class="scoresheet-delivery"></span>
+                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
+                            </td>
+                            <td>
+                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
+                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
+                                <span class="scoresheet-delivery"></span>
+                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
+                            </td>
+                            <td>
+                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
+                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
+                                <span class="scoresheet-delivery"></span>
+                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
+                            </td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <th>Jon</th>
+                            <td>
+                                <span class="scoresheet-delivery"> </span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
+                                <span class="scoresheet-delivery">.</span>
+                            </td>
+                            <td>
+                                <span class="scoresheet-delivery"> </span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
+                                <span class="scoresheet-delivery">.</span>
+                            </td>
+                            <td>
+                                <span class="scoresheet-delivery"> </span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
+                                <span class="scoresheet-delivery">.</span>
+                            </td>
+                            <td>
+                                <span class="scoresheet-delivery"> </span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
+                                <span class="scoresheet-delivery"> </span>
+                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
+                                <span class="scoresheet-delivery">.</span>
+                            </td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <h3>Score Controls</h3>
+
+        <div class="widget">
+            <div class="widget-head">
+                <div class="pull-left">Shots / runs</div>
+            </div>
+            <div class="widget-content">
+
+                <table class="table table-bordered table-hover score-panel">
+                    <colgroup>
+                        <col width="25%" />
+                        <col width="25%" />
+                        <col width="25%" />
+                        <col width="25%" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="success" ng-cloak>{{striker.Name}}</th>
+                            <th colspan="2" class="info" ng-cloak>{{nonstriker.Name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button class="btn btn-primary" ng-click="playShot('Seven', 7)">7</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Five', 5)">5</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Four', 4)">4</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Three', 3)">3</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-primary" ng-click="playShot('Two', 2)">2</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Single', 1)">1</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Dotball', 0)">0</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Wide', 2)" title="Wide">W</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-primary" ng-click="playShot('Caught', -5)" title="Caught">C</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Bowled', -5)" title="Bowled">B</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Runout', -5)" title="Run out">R</button></td>
+                            <td><button class="btn btn-primary" ng-click="playShot('Stumped', -5)" title="Stumped">S</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-primary" ng-click="playShot('Mankad', -5)" title="Mankad">M</button></td>
+                            <td style="vertical-align: middle;">Runs</td>
+                            <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" value="{{runs}}" /></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"><button class="btn btn-warning" type="button" ng-click="saveDelivery()">Save</button></th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/app/team-controller.js"></script>
+}
