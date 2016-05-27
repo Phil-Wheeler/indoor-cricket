@@ -210,3 +210,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/src/IndoorCricket/Properties/PublishProfiles/yellowduckies.cricket - Web Deploy-publish.ps1
+/src/IndoorCricket/Properties/PublishProfiles/yellowduckies.cricket - Web Deploy.pubxml

@@ -4,6 +4,8 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using IndoorCricket.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IndoorCricket.Controllers
 {
@@ -34,7 +36,10 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            Game game = _context.Games.Include(o => o.Overs).FirstOrDefault(g => g.Id == id);
+            Game game = _context.Games
+                .Include(t => t.Team)
+                .Include(o => o.Overs)
+                .FirstOrDefault(g => g.Id == id);
             //var battingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
 
             //var battingScore = battingOvers.SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
@@ -51,23 +56,31 @@ namespace IndoorCricket.Controllers
 
         // PUT: api/Games/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(int id, [FromBody] Game game)
+        public IActionResult PutGame(int id, [FromBody] object game)
         {
+            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
+            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
+
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            if (id != game.Id)
+            if (id != g.Id)
             {
                 return HttpBadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
+            //_context.Entry<Game>(g).State = EntityState.Modified;
+
+            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries != null);
+            Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
+
+            _context.Update(latestDelivery);
 
             try
             {
-                _context.SaveChanges();
+                _context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {

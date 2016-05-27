@@ -14,21 +14,20 @@
 
         $scope.title = "Loading scores...";
         $scope.game = {};
+        $scope.over = 1;
+        $scope.delivery = 0;
         $scope.deliveries = [];
-        $scope.overs = [];
         $scope.team = {};
         $scope.selected = {};
         $scope.striker = {};
         $scope.nonstriker = {};
-        $scope.shot = '';
+        $scope.shot = 0;
         $scope.runs = 0;
         $scope.working = true;
 
         $scope.getTeam = function (teamId, gameId) {
             $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
                 $scope.game = data;
-                $scope.overs = $scope.game.overs;
-
                 console.info($scope.game);
             });
 
@@ -52,9 +51,56 @@
         $scope.saveDelivery = function () {
             var val = $('#run-value', $element)[0].value;
             console.info("Batsman: " + $scope.striker.Name + ", Shot: " + $scope.shot + " for " + val + " runs. ");
+
+            if ($scope.game.Overs[$scope.over - 1].Deliveries == null) {
+                $scope.game.Overs[$scope.over - 1].Deliveries = [];
+            }
             
+            console.info("Over: " + $scope.over + ", Delivery: " + $scope.delivery);
+            if ($scope.delivery > 6) {
+                $scope.over++;
+                $scope.delivery = 1;
+            }
+            else {
+                $scope.delivery++;
+            }
+
             if ($scope.striker == undefined) {
                 alert("No batsman selected");
+            }
+            else {
+
+                //var shot = {};
+
+                //shot.Id = 0;
+                //shot.Runs = $scope.runs;
+                //shot.Stroke = $scope.shot;
+                //if ($scope.runs == -5) {
+                //    shot.Dismissal = $scope.shot;
+                //}
+                //else {
+                //    shot.Dismissal = 0;
+                //}
+
+                var delivery = {};
+                delivery.Id = 0;
+                delivery.Number = $scope.delivery;
+                delivery.Batter = $scope.striker;
+                //delivery.Bowler = $scope.nonstriker;
+                delivery.Runs = $scope.runs;
+                delivery.Stroke = $scope.shot;
+                delivery.Dismissal = ($scope.runs == -5) ? $scope.shot : 0;
+
+
+                $scope.game.Overs[$scope.over - 1].Deliveries.push(delivery);
+                console.info($scope.game);
+
+                $http.put('/api/games/' + $scope.game.Id, { game: $scope.game }).success(function (data, status, headers, config) {
+                    console.info(headers);
+                });
+                //$http.post('/score/testing', { Test: "This is a test" }).success(function (data, status, headers, config) {
+                //    console.info(data);
+                //});
             }
         }
 
