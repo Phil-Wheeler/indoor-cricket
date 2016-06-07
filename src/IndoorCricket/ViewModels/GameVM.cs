@@ -1,6 +1,7 @@
 ﻿using IndoorCricket.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,8 +18,8 @@ namespace IndoorCricket.ViewModels
         public GameVM(Game game)
         {
             _game = game;
-            //BattingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
-            //BowlingOvers = game.Overs.Where(o => o.Innings == Innings.Bowling);
+            BattingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
+            BowlingOvers = game.Overs.Where(o => o.Innings == Innings.Bowling);
             Opposition = game.Opposition;
             Fixture = game.Date;
         }

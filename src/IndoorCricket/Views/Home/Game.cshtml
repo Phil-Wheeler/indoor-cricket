@@ -7,8 +7,8 @@
 <div class="row" ng-controller="game_controller">
     <div class="col-md-3">
         <h3 ng-hide="!working">{{title}}</h3>
-        <ul ng-repeat="game in games">
-            <li ng-click="getGame(game.Id)"><span ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span>: {{game.Opposition}}</li>
+        <ul ng-repeat="game in games" class="list-group">
+            <li ng-click="getGame(game.Id)" class="list-group-item list-group-item-info"><span ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span>: {{game.Opposition}}</li>
         </ul>
     </div>
     <div class="col-md-9">

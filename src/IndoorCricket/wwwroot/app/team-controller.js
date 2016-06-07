@@ -32,7 +32,6 @@
         }
 
         $scope.Select = function (id) {
-            console.info(id);
             $http.get('/api/teams/' + id).success(function (data, status, headers, config) {
                 $scope.selectedTeam = data;
             })

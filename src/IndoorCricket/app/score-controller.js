@@ -26,6 +26,10 @@
         $scope.working = true;
         $scope.opener = {};
         $scope.runner = {};
+        $scope.batters = [];
+        $scope.onStrike = 0;
+
+        $scope.scoreTemplateUrl = '/app/games.html';
 
         $scope.getTeam = function (teamId, gameId) {
             $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
@@ -40,13 +44,22 @@
         }
 
         $scope.selectPlayer = function (index) {
-            $scope.nonstriker = $scope.striker;
-            $scope.striker = $scope.team.Players[index];
+            if ($scope.striker.name == undefined) {
+                $scope.striker = $scope.team.Players[index];
+            }
+            else {
+                $scope.nonstriker = $scope.team.Players[index];
+            }
+
+            var row = {};
+            row.Batter = $scope.team.Players[index];
+            row.Runs = 0;
+            $scope.batters.push(row);
         }
 
         $scope.playShot = function (shot, runs) {
-            var table = $('#scoresheet-table')[0];
-            var strikerRow = $('tbody tr:first', table);
+            var table = $('#scoresheet-table');
+            $scope.delivery++;
 
             if ($scope.opener.Player == undefined) {
                 $scope.opener.Player = $scope.striker;
@@ -54,11 +67,16 @@
                 $scope.runner.Player = $scope.nonstriker;
                 $scope.runner.Score = 0;
             }
-            $scope.opener.Score += runs;
-            strikerRow.css('border', '1px solid red');
+            
             $scope.shot = shot;
             $scope.runs = runs;
             $('#run-value', $element)[0].value = (runs);
+
+            $scope.batters[$scope.onStrike].Runs += runs;
+
+            console.info($scope.delivery % 2);
+            console.info($scope.delivery % 2 + $scope.batters.length);
+
         }
 
         $scope.saveDelivery = function () {
@@ -103,14 +121,14 @@
             }
         }
 
-        $scope.addOver = function (over) {
+        //$scope.addOver = function (over) {
 
-            console.info("Game: " + gameId + ", Innings: " + inningsType + ", Over #: " + number);
+        //    console.info("Game: " + gameId + ", Innings: " + inningsType + ", Over #: " + number);
 
-            $http.post('/api/overs/' + gameId, { Number: over.Number, Innings: over.Innings }).success(function (data, status, headers, config) {
+        //    $http.post('/api/overs/' + gameId, { Number: over.Number, Innings: over.Innings }).success(function (data, status, headers, config) {
 
-            })
-        }
+        //    })
+        //}
 
         //$http.get('/api/games').success(function (data, status, headers, config) {
         //    $scope.games = data;

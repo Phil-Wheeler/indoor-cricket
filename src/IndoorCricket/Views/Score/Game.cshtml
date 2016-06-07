@@ -23,6 +23,7 @@
             </dd>
         </dl>
 
+        <h5>Player List</h5>
         <ul class="list-unstyled list-inline">
             <li ng-repeat="player in team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
         </ul>
@@ -44,81 +45,17 @@
                             <th>Over Two</th>
                             <th>Over Three</th>
                             <th>Over Four</th>
-                            <th>Partnership Totals</th>
+                            <th>Run Totals</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>Phil</th>
-                            <td>
-                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
-                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
-                                <span class="scoresheet-delivery"></span>
-                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
-                            </td>
-                            <td>
-                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
-                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
-                                <span class="scoresheet-delivery"></span>
-                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
-                            </td>
-                            <td>
-                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
-                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
-                                <span class="scoresheet-delivery"></span>
-                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
-                            </td>
-                            <td>
-                                <span id="batting-over-1-ball-1" class="scoresheet-delivery">.</span>
-                                <span id="batting-over-1-ball-2" class="scoresheet-delivery">2</span>
-                                <span class="scoresheet-delivery"></span>
-                                <span id="batting-over-1-ball-4" class="scoresheet-delivery">1</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-6" class="scoresheet-delivery">7</span>
-                            </td>
-                            <td>{{opener.Score}}</td>
-                        </tr>
-                        <tr>
-                            <th>Jon</th>
-                            <td>
-                                <span class="scoresheet-delivery"> </span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
-                                <span class="scoresheet-delivery">.</span>
-                            </td>
-                            <td>
-                                <span class="scoresheet-delivery"> </span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
-                                <span class="scoresheet-delivery">.</span>
-                            </td>
-                            <td>
-                                <span class="scoresheet-delivery"> </span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
-                                <span class="scoresheet-delivery">.</span>
-                            </td>
-                            <td>
-                                <span class="scoresheet-delivery"> </span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-3" class="scoresheet-delivery">3</span>
-                                <span class="scoresheet-delivery"> </span>
-                                <span id="batting-over-1-ball-5" class="scoresheet-delivery">4</span>
-                                <span class="scoresheet-delivery">.</span>
-                            </td>
-                            <td>10</td>
+                        <tr ng-repeat="row in batters">
+                            <th>{{row.Batter.Name}}</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{row.Runs}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,10 +80,10 @@
                         <col width="25%" />
                         <col width="25%" />
                     </colgroup>
-                    <thead>
+                    <thead ng-cloak>
                         <tr>
-                            <th colspan="2" class="success" ng-cloak>{{striker.Name}}</th>
-                            <th colspan="2" class="info" ng-cloak>{{nonstriker.Name}}</th>
+                            <th colspan="2" class="success">{{striker.Name}}</th>
+                            <th colspan="2" class="info">{{nonstriker.Name}}</th>
                         </tr>
                     </thead>
                     <tbody>

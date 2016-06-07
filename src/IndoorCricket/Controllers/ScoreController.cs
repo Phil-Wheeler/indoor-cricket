@@ -33,6 +33,15 @@ namespace IndoorCricket.Controllers
                 .Include(o => o.Overs)
                 .FirstOrDefault(x => x.Id == Id);
 
+    //        Game game = _context.Games
+    //.Include(t => t.Team)
+    //.Include(o => o.Overs)
+    //.ThenInclude(d => d.Deliveries)
+    //.FirstOrDefault(g => g.Id == id);
+
+
+    //        GameVM vm = new GameVM(game);
+
             return View("Game", model);
         }
     }

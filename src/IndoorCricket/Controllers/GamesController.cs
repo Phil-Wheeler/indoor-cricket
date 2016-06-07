@@ -6,6 +6,7 @@ using Microsoft.Data.Entity;
 using IndoorCricket.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using IndoorCricket.ViewModels;
 
 namespace IndoorCricket.Controllers
 {
@@ -37,14 +38,9 @@ namespace IndoorCricket.Controllers
             }
 
             Game game = _context.Games
-                .Include(t => t.Team)
                 .Include(o => o.Overs)
+                .Include(t => t.Team)
                 .FirstOrDefault(g => g.Id == id);
-            //var battingOvers = game.Overs.Where(o => o.Innings == Innings.Batting);
-
-            //var battingScore = battingOvers.SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
-            //var bowlingScore = game.Overs.Where(o => o.Innings == Innings.Bowling)
-            //    .SelectMany(bo => bo.Deliveries).Sum(d => d.Shot.Runs);
 
             if (game == null)
             {
