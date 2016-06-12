@@ -51,10 +51,7 @@
                     <tbody>
                         <tr ng-repeat="row in batters">
                             <th>{{row.Batter.Name}}</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" class="scoresheet-delivery">{{deliver.runs}}</span></td>
                             <td>{{row.Runs}}</td>
                         </tr>
                     </tbody>
@@ -126,5 +123,6 @@
 
 @section scripts
 {
+    <script src="~/app/innings-score-model.js"></script>
     <script src="~/app/score-controller.js"></script>
 }

@@ -9,12 +9,11 @@
 
     function score_controller($location, $scope, $http, $element) {
         /* jshint validthis:true */
-        var vm = this;
-        vm.title = 'score_controller';
 
         $scope.title = "Loading scores...";
         $scope.game = {};
         $scope.over = 1;
+        $scope.overs = [];
         $scope.delivery = 0;
         $scope.deliveries = [];
         $scope.team = {};
@@ -34,7 +33,11 @@
         $scope.getTeam = function (teamId, gameId) {
             $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
                 $scope.game = data;
-                console.info($scope.game);
+                console.info(data);
+                angular.forEach(data.Overs, function (over) {
+                    over.Deliveries = [];
+                    $scope.overs.push(new Models.Over(over));
+                });
             });
 
             $http.get('/api/teams/' + teamId).success(function (data, status, headers, config) {
@@ -53,13 +56,13 @@
 
             var row = {};
             row.Batter = $scope.team.Players[index];
+            row.Overs = $scope.overs.slice(0, 4);
             row.Runs = 0;
             $scope.batters.push(row);
         }
 
         $scope.playShot = function (shot, runs) {
             var table = $('#scoresheet-table');
-            $scope.delivery++;
 
             if ($scope.opener.Player == undefined) {
                 $scope.opener.Player = $scope.striker;
@@ -72,11 +75,20 @@
             $scope.runs = runs;
             $('#run-value', $element)[0].value = (runs);
 
+            var deliv = {};
+            deliv.id = 0;
+            deliv.Number = $scope.delivery;
+            deliv.Stroke = shot;
+            deliv.Runs = runs;
+            deliv.Dismissal = (runs == -5 ? shot : 0);
+            deliv.Player = $scope.batters[$scope.onStrike].Player;
+
+            var delivery = new Models.Delivery(deliv);
+            console.info($scope.batters);
+
             $scope.batters[$scope.onStrike].Runs += runs;
-
-            console.info($scope.delivery % 2);
-            console.info($scope.delivery % 2 + $scope.batters.length);
-
+            $scope.batters[$scope.onStrike].Overs[$scope.over - 1].Number = $scope.delivery;
+            $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.push(delivery);
         }
 
         $scope.saveDelivery = function () {
