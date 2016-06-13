@@ -17,11 +17,10 @@ namespace IndoorCricket.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<Team> Team { get; set; }
-        public DbSet<Game> Game { get; set; }
-        public DbSet<Player> Player { get; set; }
-        public DbSet<Shot> Shot { get; set; }
-        public DbSet<Delivery> Delivery { get; set; }
-        public DbSet<Over> Over { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Over> Overs { get; set; }
     }
 }

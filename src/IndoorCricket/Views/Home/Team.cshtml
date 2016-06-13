@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Team";
+}
+
+<div class="row" ng-controller="team_controller" ng-init="Get()">
+    <div class="col-md-2">
+        <h3>Teams</h3>
+
+        <div class="widget">
+            <ul id="team-list" class="list-group" ng-cloak>
+                <li class="list-group-item" ng-repeat="team in teams" ng-click="Select(team.Id)">
+                    <div id="{{team.Id}}" class="list-group-item-text" ng-class="{'list-group-item-info' : selectedIndex === $index}">{{team.Name}}</div>
+                </li>
+            </ul>
+        </div>
+
+        @*<ul class="list-unstyled list-inline">
+            <li ng-repeat="player in team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
+        </ul>*@
+    </div>
+    <div class="col-md-7">
+        <h3>{{selectedTeam.Name}}</h3>
+
+        <div class="widget">
+
+            <div class="widget-head">
+                <div class="pull-right"><a href="/Score/Index/{{selectedTeam.Id}}">View Games</a></div>
+                <div class="pull-left">Team Details</div>
+            </div>
+            <div class="widget-content">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Email</th>
+                            <th>Games Played</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="player in selectedTeam.Players">
+                            <th>{{player.Name}}</th>
+                            <th>{{player.Email}}</th>
+                            <th></th>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <h3>Team Controls</h3>
+
+        <div class="widget">
+            <div class="widget-head">
+                <div class="pull-left">Register new team</div>
+            </div>
+            <div class="widget-content">
+
+                <input id="newteam-name" type="text" class="form-control" name="newteam-name" ng-model="newTeam.Name" placeholder="Team name" />
+                <button type="button" class="btn btn-default" ng-click="Create()">Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/app/team-controller.js"></script>
+}

@@ -5,6 +5,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using IndoorCricket.Models;
 using System;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace IndoorCricket.Controllers
 {
@@ -23,7 +25,7 @@ namespace IndoorCricket.Controllers
         [HttpGet]
         public IEnumerable<Team> GetTeam()
         {
-            return _context.Team;
+            return _context.Teams;
         }
 
         // GET: api/Teams/5
@@ -35,7 +37,7 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            Team team = _context.Team.Single(m => m.Id == id);
+            Team team = _context.Teams.Include(t => t.Players).SingleOrDefault(m => m.Id == id);
 
             if (team == null)
             {
@@ -82,21 +84,25 @@ namespace IndoorCricket.Controllers
 
         // POST: api/Teams
         [HttpPost]
-        public IActionResult PostTeam([FromBody] Team team)
+        public IActionResult PostTeam([FromBody] object team)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            _context.Team.Add(team);
+            JObject obj = JsonConvert.DeserializeObject<JObject>(team.ToString());
+            Team newTeam = obj.Root.First.Value<JToken>().First.ToObject<Team>();
+
+            _context.Teams.Add(newTeam);
+
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (TeamExists(team.Id))
+                if (TeamExists(newTeam.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -106,7 +112,7 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetTeam", new { id = team.Id }, team);
+            return CreatedAtRoute("GetTeam", new { id = newTeam.Id }, newTeam);
         }
 
         // DELETE: api/Teams/5
@@ -118,13 +124,13 @@ namespace IndoorCricket.Controllers
                 return HttpBadRequest(ModelState);
             }
 
-            Team team = _context.Team.Single(m => m.Id == id);
+            Team team = _context.Teams.Single(m => m.Id == id);
             if (team == null)
             {
                 return HttpNotFound();
             }
 
-            _context.Team.Remove(team);
+            _context.Teams.Remove(team);
             _context.SaveChanges();
 
             return Ok(team);
@@ -141,7 +147,7 @@ namespace IndoorCricket.Controllers
 
         private bool TeamExists(Guid id)
         {
-            return _context.Team.Count(e => e.Id == id) > 0;
+            return _context.Teams.Count(e => e.Id == id) > 0;
         }
     }
 }

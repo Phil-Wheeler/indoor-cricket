@@ -4,83 +4,71 @@ using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using IndoorCricket.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using IndoorCricket.ViewModels;
 
 namespace IndoorCricket.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Games")]
-    public class GamesController : Controller
+    [Route("api/Overs")]
+    public class OversController : Controller
     {
         private ApplicationDbContext _context;
 
-        public GamesController(ApplicationDbContext context)
+        public OversController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Games
+        // GET: api/Overs
         [HttpGet]
-        public IEnumerable<Game> GetGame()
+        public IEnumerable<Over> GetOver()
         {
-            return _context.Games.Include(x => x.Team);
+            return _context.Overs;
         }
 
-        // GET: api/Games/5
-        [HttpGet("{id}", Name = "GetGame")]
-        public IActionResult GetGame([FromRoute] int id)
+        // GET: api/Overs/5
+        [HttpGet("{id}", Name = "GetOver")]
+        public IActionResult GetOver([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            Game game = _context.Games
-                .Include(o => o.Overs)
-                .Include(t => t.Team)
-                .FirstOrDefault(g => g.Id == id);
+            //Over over = _context.Over.Single(m => m.Id == id);
+            //IEnumerable<Over> overs = _context.Games.FirstOrDefault(g => g.Id == id).Overs;
+            Game overs = _context.Games.FirstOrDefault();
 
-            if (game == null)
+            if (overs == null)
             {
                 return HttpNotFound();
             }
 
-            return Ok(game);
+            return Ok(overs);
         }
 
-        // PUT: api/Games/5
+        // PUT: api/Overs/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(int id, [FromBody] object game)
+        public IActionResult PutOver(int id, [FromBody] int over)
         {
-            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
-            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
-
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            if (id != g.Id)
-            {
-                return HttpBadRequest();
-            }
+            //if (id != over.Id)
+            //{
+            //    return HttpBadRequest();
+            //}
 
-            //_context.Entry<Game>(g).State = EntityState.Modified;
-
-            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries != null);
-            Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
-
-            _context.Update(latestDelivery);
+            //_context.Entry(over).State = EntityState.Modified;
 
             try
             {
-                //_context.SaveChanges(true);
+                //_context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(id))
+                if (!OverExists(id))
                 {
                     return HttpNotFound();
                 }
@@ -93,23 +81,23 @@ namespace IndoorCricket.Controllers
             return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
         }
 
-        // POST: api/Games
+        // POST: api/Overs
         [HttpPost]
-        public IActionResult PostGame([FromBody] Game game)
+        public IActionResult PostOver([FromBody] Over over)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            _context.Games.Add(game);
+            _context.Overs.Add(over);
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (GameExists(game.Id))
+                if (OverExists(over.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -119,28 +107,28 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
+            return CreatedAtRoute("GetOver", new { id = over.Id }, over);
         }
 
-        // DELETE: api/Games/5
+        // DELETE: api/Overs/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteGame(int id)
+        public IActionResult DeleteOver(int id)
         {
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            Game game = _context.Games.Single(m => m.Id == id);
-            if (game == null)
+            Over over = _context.Overs.Single(m => m.Id == id);
+            if (over == null)
             {
                 return HttpNotFound();
             }
 
-            _context.Games.Remove(game);
+            _context.Overs.Remove(over);
             _context.SaveChanges();
 
-            return Ok(game);
+            return Ok(over);
         }
 
         protected override void Dispose(bool disposing)
@@ -152,9 +140,9 @@ namespace IndoorCricket.Controllers
             base.Dispose(disposing);
         }
 
-        private bool GameExists(int id)
+        private bool OverExists(int id)
         {
-            return _context.Games.Count(e => e.Id == id) > 0;
+            return _context.Overs.Count(e => e.Id == id) > 0;
         }
     }
 }
