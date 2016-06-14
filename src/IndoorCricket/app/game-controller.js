@@ -16,6 +16,7 @@
         $scope.games = [];
         $scope.selected = {};
         $scope.working = true;
+        $scope.newGame = { Id: 0, Date: new Date(), Team: {}, Opposition: "", Overs: [] };
 
         $http.get('/api/games').success(function (data, status, headers, config) {
             $scope.games = data;
