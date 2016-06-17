@@ -40,6 +40,7 @@ namespace IndoorCricket.Controllers
             Game game = _context.Games
                 .Include(o => o.Overs)
                 .Include(t => t.Team)
+                .ThenInclude(p => p.Players)
                 .FirstOrDefault(g => g.Id == id);
 
             if (game == null)
@@ -95,21 +96,25 @@ namespace IndoorCricket.Controllers
 
         // POST: api/Games
         [HttpPost]
-        public IActionResult PostGame([FromBody] Game game)
+        public IActionResult PostGame([FromBody] object game)
         {
+
+            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
+            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
+
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            _context.Games.Add(game);
+            _context.Games.Add(g);
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (GameExists(game.Id))
+                if (GameExists(g.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -119,7 +124,7 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
+            return CreatedAtRoute("GetGame", new { id = g.Id }, g);
         }
 
         // DELETE: api/Games/5

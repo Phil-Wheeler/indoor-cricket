@@ -10,6 +10,36 @@
     function score_controller($location, $scope, $http, $element) {
         /* jshint validthis:true */
 
+        var StrokeEnum = Object.freeze({
+            "Out": -5,
+            "Wide": -2,
+            "Dotball": 0,
+            "Single": 1,
+            "Two": 2,
+            "Three": 3,
+            "Four": 4,
+            "Five": 5,
+            "Seven": 7
+        });
+
+        var OutEnum = Object.freeze({
+            "NO": 0,
+            "C": 1,
+            "B": 2,
+            "R": 4,
+            "St": 8,
+            "M": 16,
+            "LBW": 32
+        });
+
+
+        function string_of_enum(e,value) 
+        {
+            for (var k in e) if (e[k] == value) return k;
+            return null;
+        }
+
+
         $scope.title = "Loading scores...";
         $scope.game = {};
         $scope.over = 1;
@@ -84,7 +114,13 @@
             deliv.Player = $scope.batters[$scope.onStrike].Player;
 
             var delivery = new Models.Delivery(deliv);
-            console.info($scope.batters);
+
+            if (runs == -5) {
+                console.info(string_of_enum(OutEnum, shot));
+            }
+            else {
+                console.info(string_of_enum(StrokeEnum, shot));
+            }
 
             $scope.batters[$scope.onStrike].Runs += runs;
             $scope.batters[$scope.onStrike].Overs[$scope.over - 1].Number = $scope.delivery;

@@ -25,7 +25,8 @@ namespace IndoorCricket.Controllers
         [HttpGet]
         public IEnumerable<Team> GetTeam()
         {
-            return _context.Teams;
+            return _context.Teams
+                .Include(p => p.Players);
         }
 
         // GET: api/Teams/5
