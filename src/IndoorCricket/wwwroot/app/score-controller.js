@@ -58,10 +58,11 @@
         $scope.batters = [];
         $scope.onStrike = 0;
 
-        $scope.scoreTemplateUrl = '/app/games.html';
+        //$scope.scoreTemplateUrl = '/app/games.html';
 
         $scope.getTeam = function (teamId, gameId) {
-            $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
+
+            $http.get('/api/games/:id', gameId).success(function (data, status, headers, config) {
                 $scope.game = data;
                 console.info(data);
                 angular.forEach(data.Overs, function (over) {

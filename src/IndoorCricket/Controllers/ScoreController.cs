@@ -20,27 +20,19 @@ namespace IndoorCricket.Controllers
         public IActionResult Index(Guid id)
         {
             var model = _context.Games
+                .Include(o => o.Overs)
                 .Include(t => t.Team)
                 .Where(g => g.Team.Id == id);
 
             return View(model);
         }
 
-        public IActionResult Game(int Id)
+        public IActionResult Game(Guid Id)
         {
             var model = _context.Games
                 .Include(t => t.Team)
                 .Include(o => o.Overs)
                 .FirstOrDefault(x => x.Id == Id);
-
-    //        Game game = _context.Games
-    //.Include(t => t.Team)
-    //.Include(o => o.Overs)
-    //.ThenInclude(d => d.Deliveries)
-    //.FirstOrDefault(g => g.Id == id);
-
-
-    //        GameVM vm = new GameVM(game);
 
             return View("Game", model);
         }

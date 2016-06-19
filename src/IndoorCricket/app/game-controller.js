@@ -17,7 +17,7 @@
         $scope.teams = [];
         $scope.selected = {};
         $scope.working = true;
-        $scope.game = { Id: 0, Date: new Date(), Team: {}, Opposition: "", Overs: [] };
+        $scope.game = { Id: '00000000-0000-0000-0000-000000000000', Date: new Date(), Team: {}, Season: 1, Opposition: "", Overs: [] };
 
         $http.get('/api/games').success(function (data, status, headers, config) {
             $scope.games = data;
@@ -55,10 +55,8 @@
             var selectedTeam = $scope.teams[teamIndex];
             $scope.game.Team = selectedTeam;
 
-            //console.info($scope.game.Team);
-            console.info($scope.game.Date);
             var gameDate = new Date($scope.game.Date);
-            console.info(gameDate);
+            $scope.game.Id = '00000000-0000-0000-0000-000000000000';
 
             $http.post('/api/games', { game: $scope.game }).success(function (data, status, headers, config) {
                 $scope.games.push($scope.game);

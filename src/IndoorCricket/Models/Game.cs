@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,9 +10,10 @@ namespace IndoorCricket.Models
 
     public class Game
     {
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
-        //public int Season { get; set; }
+        public int Season { get; set; }
         public virtual Team Team { get; set; }
         public string Opposition { get; set; }
 

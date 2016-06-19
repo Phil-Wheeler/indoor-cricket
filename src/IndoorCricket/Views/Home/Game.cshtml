@@ -36,7 +36,7 @@
                         </div>
                         <div class="panel-body">
                             <ol>
-                                <li ng-repeat="over in selected.Overs | filter:{Innings:0}">{{over.Number}} {{over.Id}}</li>
+                                <li ng-repeat="over in selected.Overs | filter:{Innings:0}">{{over.Number}} {{over.Id}}  {{over.Deliveries.length}}</li>
                             </ol>
                         </div>
                     </div>
