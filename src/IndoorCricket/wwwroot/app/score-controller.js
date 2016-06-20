@@ -11,15 +11,15 @@
         /* jshint validthis:true */
 
         var StrokeEnum = Object.freeze({
-            "Out": -5,
-            "Wide": -2,
-            "Dotball": 0,
-            "Single": 1,
-            "Two": 2,
-            "Three": 3,
-            "Four": 4,
-            "Five": 5,
-            "Seven": 7
+            "X": -5,
+            "W": -2,
+            ".": 0,
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "7": 7
         });
 
         var OutEnum = Object.freeze({
@@ -62,7 +62,7 @@
 
         $scope.getTeam = function (teamId, gameId) {
 
-            $http.get('/api/games/:id', gameId).success(function (data, status, headers, config) {
+            $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
                 $scope.game = data;
                 console.info(data);
                 angular.forEach(data.Overs, function (over) {
@@ -92,6 +92,12 @@
             $scope.batters.push(row);
         }
 
+        $scope.adjustRuns = function () {
+            var currentDelivery = $scope.delivery;
+            var dlvy = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries[currentDelivery - 1];
+            dlvy.runs = parseInt($('#run-value', $element)[0].value); // There's surely a better way but this will do for now
+        }
+
         $scope.playShot = function (shot, runs) {
             var table = $('#scoresheet-table');
 
@@ -104,13 +110,12 @@
             
             $scope.shot = shot;
             $scope.runs = runs;
-            $('#run-value', $element)[0].value = (runs);
 
             var deliv = {};
             deliv.id = 0;
-            deliv.Number = $scope.delivery;
+            deliv.Number = $scope.delivery + 1;
             deliv.Stroke = shot;
-            deliv.Runs = runs;
+            deliv.Runs = $scope.runs;
             deliv.Dismissal = (runs == -5 ? shot : 0);
             deliv.Player = $scope.batters[$scope.onStrike].Player;
 
@@ -126,17 +131,15 @@
             $scope.batters[$scope.onStrike].Runs += runs;
             $scope.batters[$scope.onStrike].Overs[$scope.over - 1].Number = $scope.delivery;
             $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.push(delivery);
+            $scope.delivery = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.length;
         }
 
         $scope.saveDelivery = function () {
-            var val = $('#run-value', $element)[0].value;
-            console.info("Batsman: " + $scope.striker.Name + ", Shot: " + $scope.shot + " for " + val + " runs. ");
 
             if ($scope.game.Overs[$scope.over - 1].Deliveries == null) {
                 $scope.game.Overs[$scope.over - 1].Deliveries = [];
             }
             
-            console.info("Over: " + $scope.over + ", Delivery: " + $scope.delivery);
             if ($scope.delivery > 6) {
                 $scope.over++;
                 $scope.delivery = 1;
@@ -151,17 +154,17 @@
             else {
 
 
-                var delivery = {};
-                delivery.Id = 0;
-                delivery.Number = $scope.delivery;
-                delivery.Batter = $scope.striker;
-                //delivery.Bowler = $scope.nonstriker;
-                delivery.Runs = $scope.runs;
-                delivery.Stroke = $scope.shot;
-                delivery.Dismissal = ($scope.runs == -5) ? $scope.shot : 0;
+                //var delivery = {};
+                //delivery.Id = 0;
+                //delivery.Number = $scope.delivery;
+                //delivery.Batter = $scope.striker;
+                ////delivery.Bowler = $scope.nonstriker;
+                //delivery.Runs = $scope.runs;
+                //delivery.Stroke = $scope.shot;
+                //delivery.Dismissal = ($scope.runs == -5) ? $scope.shot : 0;
 
 
-                $scope.game.Overs[$scope.over - 1].Deliveries.push(delivery);
+                //$scope.game.Overs[$scope.over - 1].Deliveries.push(delivery);
                 console.info($scope.game);
 
                 $http.put('/api/games/' + $scope.game.Id, { game: $scope.game }).success(function (data, status, headers, config) {

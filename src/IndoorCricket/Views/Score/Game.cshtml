@@ -51,13 +51,13 @@
                     <tbody>
                         <tr ng-repeat="row in batters">
                             <th>{{row.Batter.Name}}</th>
-                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" class="scoresheet-delivery">{{deliver.runs}}</span></td>
+                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" title="{{deliver.shot}}" class="scoresheet-delivery">{{deliver.runs}}</span></td>
                             <td>{{row.Runs}}</td>
                         </tr>
                     </tbody>
                 </table>
-
             </div>
+
         </div>
         
     </div>
@@ -105,7 +105,7 @@
                         <tr>
                             <td><button class="btn btn-primary" ng-click="playShot(16, -5)" title="Mankad">M</button></td>
                             <td style="vertical-align: middle;">Runs</td>
-                            <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" value="{{runs}}" /></td>
+                            <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" ng-click="adjustRuns()" value="{{runs}}" /></td>
                         </tr>
                     </tbody>
                     <tfoot>

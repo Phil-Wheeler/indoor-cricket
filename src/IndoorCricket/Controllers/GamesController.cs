@@ -40,6 +40,7 @@ namespace IndoorCricket.Controllers
 
             Game game = _context.Games
                 .Include(o => o.Overs)
+                .ThenInclude(d => d.Deliveries)
                 .Include(t => t.Team)
                 .ThenInclude(p => p.Players)
                 .FirstOrDefault(g => g.Id == id);
@@ -71,14 +72,15 @@ namespace IndoorCricket.Controllers
 
             //_context.Entry<Game>(g).State = EntityState.Modified;
 
-            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries != null);
+            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries.Any());
             Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
 
-            _context.Update(latestDelivery);
+            //_context.Update(latestDelivery);
+            _context.Update(g);
 
             try
             {
-                //_context.SaveChanges(true);
+                _context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {
