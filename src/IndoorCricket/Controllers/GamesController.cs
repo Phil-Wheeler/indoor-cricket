@@ -55,32 +55,33 @@ namespace IndoorCricket.Controllers
 
         // PUT: api/Games/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(Guid id, [FromBody] object game)
+        public IActionResult PutGame(Guid id, [FromBody] JObject value)
         {
-            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
-            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
+            //JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
+            //Player p = obj.Root.First.First<JToken>().First.ToObject<Player>();
+            Game game = value["game"].ToObject<Game>();
+            //var overs = obj.Root.First.First.Last.Last.ToObject<IEnumerable<Over>>();
+            //Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
 
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            if (id != g.Id)
+            if (id != game.Id)
             {
                 return HttpBadRequest();
             }
 
-            //_context.Entry<Game>(g).State = EntityState.Modified;
-
-            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries.Any());
+            Over latestOver = game.Overs.LastOrDefault(o => o.Deliveries.Any());
             Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
+            //latestDelivery.Batter = p; // assume all deliveries are batting games.
 
-            //_context.Update(latestDelivery);
-            _context.Update(g);
+            _context.Update(game);
 
             try
             {
-                _context.SaveChanges(true);
+                //_context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {
