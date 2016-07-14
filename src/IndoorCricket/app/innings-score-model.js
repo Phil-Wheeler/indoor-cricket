@@ -5,7 +5,6 @@
         function Over(over) {
             this.id = over.Id;
             this.number = over.Number;
-            this.description = over.Description;
             this.batting = over.IsBatting;
             this.deliveries = over.Deliveries;
         }
@@ -30,11 +29,8 @@
 
     var Frame = (function () {
         function Frame(frame) {
-            this.shot = frame.Ball;
-            this.score = frame.Score;
+            this.shots = [];
             this.player = frame.Player;
-            this.over = frame.Over;
-            this.ball = frame.Ball;
         }
         return Frame;
     })();

@@ -82,20 +82,17 @@
             row.Overs = $scope.overs.slice(0, 4);
             row.Runs = 0;
 
-            var fr = {};
-            fr.Player = row.Batter;
-            fr.Shot = 0;
-            fr.Score = 0;
-            fr.Over = 0;
-            fr.Ball = 0;
+            var frm = {};
+            frm.Player = row.Batter;
+            frm.Shots = [];
 
-            var frame = new Models.Frame(fr);
+            var frame = new Models.Frame(frm);
 
             var setPlayers = $($scope.frames).map(function (i, e) {
                 return e.player;
             });
 
-            var alreadyAdded = $.inArray(fr.Player, setPlayers.get()) > -1;
+            var alreadyAdded = $.inArray(frm.Player, setPlayers.get()) > -1;
 
             if (!alreadyAdded) {
                 $scope.frames.push(frame);
@@ -111,18 +108,12 @@
 
         $scope.playShot = function (shot, runs) {
             var table = $('#scoresheet-table');
-
+            var frm = $scope.frames.length - 1;
             
             $scope.shot = shot;
             $scope.runs = runs;
             $('#run-value', $element)[0].value = runs;
-
-            $scope.frames[0].shot = shot;
-            $scope.frames[0].score = runs;
-            $scope.frames[0].over = $scope.over - 1;
-            $scope.frames[0].ball = $scope.delivery;
             
-            console.info($scope.frames[0]);
 
             var deliv = {};
             deliv.id = 0;
@@ -134,6 +125,19 @@
             deliv.Bowler = null;
 
             var delivery = new Models.Delivery(deliv);
+
+            var frame = $scope.frames[frm];
+
+            var currentFrame = $scope.frames[$scope.frames.length - 1];
+            var lastShot = currentFrame.shots[currentFrame.shots.length - 1];
+
+            console.info(lastShot);
+
+            if (lastShot == undefined || lastShot.id == 0) {
+                frame.shots.push(deliv);
+            }
+            else {
+            }
 
             $scope.batters[$scope.onStrike].Runs += runs;
 
@@ -148,14 +152,9 @@
 
         $scope.saveDelivery = function () {
 
-            //if ($scope.game.Overs[$scope.over - 1].Deliveries == null) {
-            //    $scope.game.Overs[$scope.over - 1].Deliveries = [];
-            //}
-            
-            console.info($scope.game);
 
             $scope.delivery = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.pop();
-            console.info($scope.delivery);
+            console.info(lastShot);
             $scope.game.Overs[$scope.over - 1].Deliveries.push($scope.delivery);
 
 

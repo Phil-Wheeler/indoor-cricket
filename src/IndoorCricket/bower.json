@@ -15,7 +15,6 @@
   },
   "resolutions": {
     "angular": "1.5.5",
-    "jquery": ">= 1.7.2",
-    "bootstrap": "3.3.6"
+    "jquery": ">= 1.7.2"
   }
 }
