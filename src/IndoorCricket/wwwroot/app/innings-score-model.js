@@ -28,9 +28,30 @@ var Models;
 
 
     var Frame = (function () {
-        function Frame(frame) {
-            this.shots = [];
-            this.player = frame.Player;
+        function Frame(player) {
+            this.Overs = [];
+            this.Player = player;
+            this.Runs = function () {
+
+                var thisFrame = this;
+
+                var runningTotal = thisFrame.Overs.map(function (index, el) {
+
+                    var overScore = index.deliveries.map(function () {
+                        return $(this).Runs;
+                    })
+                    .reduce(add, 0);
+                    return overScore;
+                })
+                .reduce(add, 0);
+
+                return runningTotal;
+                //console.info(runningTotal);
+            }
+
+            function add(a, b) {
+                return a + b;
+            }
         }
         return Frame;
     })();

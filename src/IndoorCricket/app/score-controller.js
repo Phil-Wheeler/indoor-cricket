@@ -9,6 +9,7 @@
 
     function score_controller($location, $scope, $http, $element) {
         /* jshint validthis:true */
+        var dirty = false;
 
         var StrokeEnum = Object.freeze({
             "X": -5,
@@ -42,7 +43,7 @@
 
         $scope.title = "Loading scores...";
         $scope.game = {};
-        $scope.over = 1;
+        //$scope.over = 1;
         $scope.overs = [];
         $scope.delivery = 0;
         $scope.deliveries = [];
@@ -56,7 +57,8 @@
         $scope.onStrike = 0;
         $scope.frames = [];
 
-        var saved = true;
+        var saved = false;
+        var over = 1;
 
         $scope.init = function ()
         {
@@ -77,36 +79,35 @@
         }
 
         $scope.selectPlayer = function (index) {
-            var row = {};
-            row.Batter = $scope.team.Players[index];
-            row.Overs = $scope.overs.slice(0, 4);
-            row.Runs = 0;
+            dirty = true;
 
-            var frm = {};
-            frm.Player = row.Batter;
-            frm.Shots = [];
-
-            var frame = new Models.Frame(frm);
+            var frame = new Models.Frame($scope.team.Players[index]);
+            for (var i = 0; i < 4; i++) {
+                var ov = $scope.overs[i];
+                frame.Overs.push(ov);
+            }
 
             var setPlayers = $($scope.frames).map(function (i, e) {
                 return e.player;
             });
 
-            var alreadyAdded = $.inArray(frm.Player, setPlayers.get()) > -1;
+            var alreadyAdded = $.inArray(frame.Player, setPlayers.get()) > -1;
 
             if (!alreadyAdded) {
                 $scope.frames.push(frame);
-                $scope.batters.push(row);
+                $scope.batters.push(frame.Player);
             }
         }
 
         $scope.adjustRuns = function () {
+            dirty = true;
             var currentDelivery = $scope.delivery;
             var dlvy = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries[currentDelivery];
             dlvy.runs = parseInt($('#run-value', $element)[0].value); // There's surely a better way but this will do for now
         }
 
         $scope.playShot = function (shot, runs) {
+            dirty = true;
             var table = $('#scoresheet-table');
             var frm = $scope.frames.length - 1;
             
@@ -128,15 +129,31 @@
 
             var frame = $scope.frames[frm];
 
-            var currentFrame = $scope.frames[$scope.frames.length - 1];
-            var lastShot = currentFrame.shots[currentFrame.shots.length - 1];
+            // get the current over
+            console.info(frame);
+            var o = frame.Overs[over - 1];
+            var len = o.deliveries.length;
 
-            console.info(lastShot);
+            if (o.deliveries.length == 0) {
+                console.info("no deliveries yet");
+                o.deliveries.push(deliv);
+            } else {
+                console.info("deliveries");
+                if (o.deliveries[len - 1].id == 0) {
+                    o.deliveries[len - 1] = deliv;
+                } else {
+                    o.deliveries.push(deliv);
+                }
+            }
 
-            if (lastShot == undefined || lastShot.id == 0) {
-                frame.shots.push(deliv);
+            console.info(frame.Runs());
+
+            /*
+            if (lastShot === undefined || lastShot.id == 0) {
+                lastShot.runs = $scope.runs;
             }
             else {
+                frame.shots.push(deliv);
             }
 
             $scope.batters[$scope.onStrike].Runs += runs;
@@ -148,6 +165,7 @@
             else {
                 $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries[$scope.delivery] = delivery;
             }
+            */
         }
 
         $scope.saveDelivery = function () {
@@ -173,6 +191,7 @@
                         $scope.delivery++;
                     }
                     saved = true;
+                    dirty = false;
                 });
             }
         }

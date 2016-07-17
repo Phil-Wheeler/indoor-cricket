@@ -49,10 +49,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in batters">
-                            <th>{{row.Batter.Name}}</th>
-                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" title="{{deliver.shot}}" class="scoresheet-delivery">{{deliver.runs}}</span></td>
-                            <td>{{row.Runs}}</td>
+                        <tr ng-repeat="frame in frames">
+                            <th>{{frame.Player.Name}}</th>
+                            <td ng-repeat="over in frame.Overs"><span ng-repeat="deliver in over.deliveries" title="{{deliver.Stroke}}" class="scoresheet-delivery">{{deliver.Runs}}</span></td>
+                            <td>{{frame.Runs()}}</td>
                         </tr>
                     </tbody>
                 </table>
