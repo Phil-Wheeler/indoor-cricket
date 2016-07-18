@@ -108,13 +108,17 @@
 
         $scope.playShot = function (shot, runs) {
             dirty = true;
-            var table = $('#scoresheet-table');
-            var frm = $scope.frames.length - 1;
+            //var table = $('#scoresheet-table');
+            //var frm = $scope.frames.length - 1;
             
+            var frame = $scope.frames[$scope.frames.length - 1];
             $scope.shot = shot;
             $scope.runs = runs;
             $('#run-value', $element)[0].value = runs;
             
+            // get the current over
+            var o = frame.Overs[over - 1];
+            var len = o.deliveries.length;
 
             var deliv = {};
             deliv.id = 0;
@@ -122,31 +126,25 @@
             deliv.Stroke = shot;
             deliv.Runs = $scope.runs;
             deliv.Dismissal = (runs == -5 ? shot : 0);
-            deliv.Batter = $scope.batters[$scope.onStrike].Batter;
+            deliv.Batter = frame.Player;
             deliv.Bowler = null;
 
             var delivery = new Models.Delivery(deliv);
 
-            var frame = $scope.frames[frm];
 
-            // get the current over
-            console.info(frame);
-            var o = frame.Overs[over - 1];
-            var len = o.deliveries.length;
 
             if (o.deliveries.length == 0) {
                 console.info("no deliveries yet");
                 o.deliveries.push(deliv);
             } else {
                 console.info("deliveries");
+                console.info(o.deliveries[len - 1]);
                 if (o.deliveries[len - 1].id == 0) {
                     o.deliveries[len - 1] = deliv;
                 } else {
                     o.deliveries.push(deliv);
                 }
             }
-
-            console.info(frame.Runs());
 
             /*
             if (lastShot === undefined || lastShot.id == 0) {
@@ -170,16 +168,15 @@
 
         $scope.saveDelivery = function () {
 
+            //var currentOver = $scope.frames[$scope.frames.length - 1].Overs[over - 1];
+            //var delivery = currentOver.deliveries[$scope.delivery];
 
-            $scope.delivery = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.pop();
-            console.info(lastShot);
-            $scope.game.Overs[$scope.over - 1].Deliveries.push($scope.delivery);
+            //console.info(currentOver);
+            //$scope.game.Overs[currentOver.number - 1].Deliveries.push(delivery);
+            console.info($scope.game);
 
 
-            if ($scope.delivery.Batter == undefined) {
-                alert("No batsman selected");
-            }
-            else {
+            try {
 
 
                 $http.put('/api/games/' + $scope.game.Id, { game: $scope.game }).success(function (data, status, headers, config) {
@@ -193,6 +190,10 @@
                     saved = true;
                     dirty = false;
                 });
+
+            }
+            catch (e) {
+                console.warn("Failed to save");
             }
         }
 

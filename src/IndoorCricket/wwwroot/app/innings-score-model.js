@@ -14,19 +14,21 @@ var Models;
 
     var Delivery = (function () {
         function Delivery(delivery) {
-            this.id = delivery.Id;
-            this.number = delivery.Number;
-            this.stroke = delivery.Stroke;
-            this.runs = delivery.Runs;
-            this.dismissal = delivery.Dismissal;
+            this.Id = delivery.Id;
+            this.Number = delivery.Number;
+            this.Stroke = delivery.Stroke;
+            this.Runs = delivery.Runs;
+            this.Dismissal = delivery.Dismissal;
             this.Batter = delivery.Batter;
             this.Bowler = delivery.Bowler;
+
         }
         return Delivery;
     })();
     Models.Delivery = Delivery;
 
 
+    // a Frame is a logical representation ("view model") of a player's block of 4 overs
     var Frame = (function () {
         function Frame(player) {
             this.Overs = [];
@@ -35,10 +37,10 @@ var Models;
 
                 var thisFrame = this;
 
-                var runningTotal = thisFrame.Overs.map(function (index, el) {
+                var runningTotal = thisFrame.Overs.map(function (el, index) {
 
-                    var overScore = index.deliveries.map(function () {
-                        return $(this).Runs;
+                    var overScore = el.deliveries.map(function (e) {
+                        return e.Runs;
                     })
                     .reduce(add, 0);
                     return overScore;
@@ -46,7 +48,6 @@ var Models;
                 .reduce(add, 0);
 
                 return runningTotal;
-                //console.info(runningTotal);
             }
 
             function add(a, b) {

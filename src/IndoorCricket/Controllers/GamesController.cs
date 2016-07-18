@@ -81,7 +81,7 @@ namespace IndoorCricket.Controllers
 
             try
             {
-                //_context.SaveChanges(true);
+                _context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +95,8 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
+            //return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
+            return new Microsoft.AspNet.Mvc.HttpOkObjectResult(game);
         }
 
         // POST: api/Games
