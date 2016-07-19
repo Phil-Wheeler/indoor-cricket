@@ -1,0 +1,32 @@
+﻿
+
+
+<div class="row" ng-controller="home_controller">
+    <div class="col-md-3">
+        <h3>Games</h3>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info" ng-repeat="game in games" id="{{game.Id}}">
+                <div>
+                    <p><span class="meta">{{game.Date}}</span> <span class="pull-right"><i class="glyphicon glyphicon-calendar"></i> {{game.Season}}</span></p>
+                    <p>{{game.Team.Name}} vs {{game.Opposition}}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <h3>Game vs. @Model.Opposition</h3>
+
+        <div class="widget">
+
+            <div class="widget-head">
+                <div class="pull-left">Batting</div>
+            </div>
+            <div class="widget-content">
+            </div>
+
+        </div>
+
+        <img src="/images/duck.png" />
+    </div>
+</div>
+

@@ -7,6 +7,7 @@ using IndoorCricket.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using IndoorCricket.ViewModels;
+using System;
 
 namespace IndoorCricket.Controllers
 {
@@ -30,7 +31,7 @@ namespace IndoorCricket.Controllers
 
         // GET: api/Games/5
         [HttpGet("{id}", Name = "GetGame")]
-        public IActionResult GetGame([FromRoute] int id)
+        public IActionResult GetGame([FromRoute] Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +53,7 @@ namespace IndoorCricket.Controllers
 
         // PUT: api/Games/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(int id, [FromBody] object game)
+        public IActionResult PutGame(Guid id, [FromBody] object game)
         {
             JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
             Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
@@ -124,7 +125,7 @@ namespace IndoorCricket.Controllers
 
         // DELETE: api/Games/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteGame(int id)
+        public IActionResult DeleteGame(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -152,7 +153,7 @@ namespace IndoorCricket.Controllers
             base.Dispose(disposing);
         }
 
-        private bool GameExists(int id)
+        private bool GameExists(Guid id)
         {
             return _context.Games.Count(e => e.Id == id) > 0;
         }

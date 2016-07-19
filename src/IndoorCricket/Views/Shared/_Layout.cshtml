@@ -62,8 +62,14 @@
         <environment names="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="https://opensource.keycdn.com/angularjs/1.5.3/angular.min.js"></script>
+            <script src="http://cdn.date-fns.org/v1.3.0/date_fns.min.js"></script>
+            <script src="~/lib/angular/angular.min.js"></script>
+            <script src="~/lib/angular-route/angular-route.min.js"></script>
+            <script src="~/js/app.js" asp-append-version="true"></script>
+
+            <!-- models -->
+            <script src="~/js/models/game-model.js"></script>
+            <script src="~/app/home-controller.js"></script>
         </environment>
         <environment names="Staging,Production">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"

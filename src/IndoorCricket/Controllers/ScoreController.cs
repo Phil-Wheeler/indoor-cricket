@@ -26,7 +26,7 @@ namespace IndoorCricket.Controllers
             return View(model);
         }
 
-        public IActionResult Game(int Id)
+        public IActionResult Game(Guid Id)
         {
             var model = _context.Games
                 .Include(t => t.Team)
