@@ -10,9 +10,18 @@
     function home_controller($scope, $http) {
         $scope.title = 'Indoor Cricket';
         $scope.games = [];
+        $scope.selectedGame = {};
 
         activate();
 
+        $scope.getGame = function(id) {
+            console.info(id);
+            $http.get('/api/games/' + id).then(function (result) {
+
+                $scope.selectedGame = new Models.Game(result.data);
+
+            });
+        }
 
         function activate() {
 
@@ -24,7 +33,6 @@
                     $scope.games.push(game);
                 }
 
-                console.info($scope.games);
             });
 
         }

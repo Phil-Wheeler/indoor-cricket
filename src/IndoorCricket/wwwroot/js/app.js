@@ -1,27 +1,7 @@
-﻿(function () {
+// <reference path="utility/utility.ts" />
+// <reference path="../lib/typings/angularjs/angular.d.ts" />
+var app;
+(function () {
     'use strict';
-    var app;
-
-    app = angular.module('Cricket', [
-        // Angular modules 
-        'ngRoute'
-
-        // Custom modules 
-
-        // 3rd Party Modules
-        
-    ]);
-
-    app.config(function ($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: '/templates/home.html'
-        }).when('/', {
-            templateUrl: '/templates/home.html'
-        }).when('/game/', {
-            templateUrl: '/templates/home.html'
-        }).otherwise({
-            redirectTo: '/'
-        });
-    });
-
+    app = angular.module(Utility.Resources.appName, ['ngRoute']);
 })();
