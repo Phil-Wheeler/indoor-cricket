@@ -22,7 +22,7 @@
         public static templates: string = Utility.Base.url + 'templates/';
         public static api: string = Utility.Base.url + 'api/';
         public static home: string = '/';
-        public static game: string = '/game';
+        public static game: string = '/game'; 
         public static team: string = '/team';
     }
 

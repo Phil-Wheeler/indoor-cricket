@@ -20,9 +20,10 @@
 
     app.run(function ($rootScope, $location) {
 
-        console.info('running');
+        console.info('running'); 
 
         $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+            console.info("Started");
         });
     });
 })();
