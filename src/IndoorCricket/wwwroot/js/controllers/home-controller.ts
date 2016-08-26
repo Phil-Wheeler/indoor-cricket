@@ -13,6 +13,9 @@
         //public nominee: Models.Nomination;
         private gameService;
         //public addCategory: Function;
+        public Games: Array<Models.Game>;
+        public Game: Models.Game;
+        public get: Function;
 
         constructor($scope: any, gameService) {
             $scope.vm = this;
@@ -23,6 +26,10 @@
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
+
+            $scope.get = function () {
+                console.info("Getting");
+            }
 
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;

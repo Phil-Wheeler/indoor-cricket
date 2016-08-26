@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    app.config(function ($routeProvider) {
+    app.config(function ($routeProvider, $locationProvider) {
         console.info('routes');
         $routeProvider.when(Utility.Urls.game, {
             templateUrl: Utility.Templates.game
@@ -11,7 +11,7 @@
         }).otherwise({
             redirectTo: Utility.Urls.home
         });
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
     });
     app.run(function ($rootScope, $location) {
         console.info('running');

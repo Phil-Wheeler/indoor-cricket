@@ -2,7 +2,6 @@ var Controllers;
 (function (Controllers) {
     'use strict';
     var Home = (function () {
-        //public addCategory: Function;
         function Home($scope, gameService) {
             $scope.vm = this;
             console.info("In Home Controller");
@@ -12,6 +11,9 @@ var Controllers;
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
+            $scope.get = function () {
+                console.info("Getting");
+            };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;
             //});

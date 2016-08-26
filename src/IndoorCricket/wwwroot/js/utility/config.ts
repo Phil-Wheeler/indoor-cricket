@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    app.config(function ($routeProvider) {
+    app.config(function ($routeProvider, $locationProvider) {
         console.info('routes');
         $routeProvider.when(Utility.Urls.game, {
             templateUrl: Utility.Templates.game
@@ -14,7 +14,7 @@
             //templateUrl: Utility.Templates.home
         });
 
-        //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
     });
 
 
