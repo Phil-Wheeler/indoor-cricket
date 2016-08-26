@@ -70,7 +70,7 @@ var Utility;
     var Services = (function () {
         function Services() {
         }
-        Services.nominationService = 'nominationService';
+        Services.gameService = 'gameService';
         return Services;
     }());
     Utility.Services = Services;

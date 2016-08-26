@@ -46,7 +46,7 @@
     }
 
     export class Services {
-        public static nominationService: string = 'nominationService';
+        public static gameService: string = 'gameService';
     }
 
     export class Filters {

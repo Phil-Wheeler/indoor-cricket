@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="utility/utility.ts" />
+
 var app;
 (function () {
     'use strict';
