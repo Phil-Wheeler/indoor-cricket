@@ -1,3 +1,4 @@
+/// <reference path="/services/game.ts" />
 var Controllers;
 (function (Controllers) {
     'use strict';
@@ -6,13 +7,17 @@ var Controllers;
             $scope.vm = this;
             console.info("In Home Controller");
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
-            $scope.nominations = [];
+            $scope.games = [];
             $scope.categories = [];
+            $scope.selectedGame = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
-            $scope.get = function () {
-                console.info("Getting");
+            gameService.get().then(function (g) {
+                $scope.games = g;
+            });
+            $scope.get = function (id) {
+                gameService.getGame(id);
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;

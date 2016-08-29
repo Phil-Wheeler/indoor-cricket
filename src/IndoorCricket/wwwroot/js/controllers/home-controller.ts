@@ -1,4 +1,7 @@
-﻿module Controllers {
+﻿/// <reference path="/services/game.ts" />
+
+
+module Controllers {
     'use strict';
 
     export class Home {
@@ -21,15 +24,21 @@
             $scope.vm = this;
             console.info("In Home Controller");
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
-            $scope.nominations = [];
+            $scope.games = [];
             $scope.categories = [];
+            $scope.selectedGame = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
 
-            $scope.get = function () {
-                console.info("Getting");
-            }
+
+            gameService.get().then((g: Array<Models.Game>) => {
+                $scope.games = g;
+            });
+
+            $scope.get = function (id) {
+                gameService.getGame(id);
+            };
 
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;
@@ -50,7 +59,6 @@
             //    var model = $scope.newCategory;
             //    var result = gameService.addCategory(model);
             //};
-
         }
 
 

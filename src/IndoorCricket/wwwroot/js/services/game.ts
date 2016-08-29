@@ -11,8 +11,14 @@ module Services {
 
             return $http.get(Utility.ApiEndPoints.games).then((result) => {
                 var response = result.data;
-                var noms = response; 
+                var noms = response;
                 return noms;
+            });
+        };
+
+        this.getGame = (id): Models.Game => {
+            return $http.get(Utility.ApiEndPoints.games, id).then((result) => {
+                return result.data;
             });
         };
 

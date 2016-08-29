@@ -12,6 +12,11 @@ var Services;
                 return noms;
             });
         };
+        this.getGame = function (id) {
+            return $http.get(Utility.ApiEndPoints.games, id).then(function (result) {
+                return result.data;
+            });
+        };
         //this.getCategories = (): Models.Category => {
         //    return $http.get(Utility.ApiEndPoints.category).then((result) => {
         //        var response = result.data;

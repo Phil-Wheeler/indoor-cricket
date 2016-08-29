@@ -5,7 +5,8 @@
         $routeProvider.when(Utility.Urls.game, {
             templateUrl: Utility.Templates.game
         }).when(Utility.Urls.home, {
-            templateUrl: Utility.Templates.home
+            templateUrl: Utility.Templates.home,
+            controller: Controllers.Home
         }).when(Utility.Urls.team, {
             templateUrl: Utility.Templates.team
         }).otherwise({
@@ -15,7 +16,6 @@
     });
     app.run(function ($rootScope, $location) {
         console.info('running');
-        //$location.html5Mode(true);
         $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
             console.info("Started");
         });
