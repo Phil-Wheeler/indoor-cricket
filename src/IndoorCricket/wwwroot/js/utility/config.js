@@ -2,8 +2,10 @@
     'use strict';
     app.config(function ($routeProvider, $locationProvider) {
         console.info('routes');
+        //$templateCache.removeAll();
         $routeProvider.when(Utility.Urls.game, {
-            templateUrl: Utility.Templates.game
+            templateUrl: Utility.Templates.game,
+            controller: Controllers.Game
         }).when(Utility.Urls.home, {
             templateUrl: Utility.Templates.home,
             controller: Controllers.Home

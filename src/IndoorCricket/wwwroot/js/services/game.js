@@ -4,16 +4,14 @@ var Services;
 (function (Services) {
     'use strict';
     app.service(Utility.Services.gameService, function ($http, $q, $location) {
-        this.get = function () {
+        this.games = function () {
             console.info("In game service");
             return $http.get(Utility.ApiEndPoints.games).then(function (result) {
-                var response = result.data;
-                var noms = response;
-                return noms;
+                return result.data;
             });
         };
-        this.getGame = function (id) {
-            return $http.get(Utility.ApiEndPoints.games, id).then(function (result) {
+        this.get = function (id) {
+            return $http.get(Utility.ApiEndPoints.games + '/' + id).then(function (result) {
                 return result.data;
             });
         };

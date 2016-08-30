@@ -5,22 +5,21 @@ module Services {
     'use strict';
     app.service(Utility.Services.gameService, function ($http, $q, $location) {
 
-        this.get = (): Models.Game => {
+        this.games = (): Models.Game => {
 
             console.info("In game service");
 
             return $http.get(Utility.ApiEndPoints.games).then((result) => {
-                var response = result.data;
-                var noms = response;
-                return noms;
-            });
-        };
-
-        this.getGame = (id): Models.Game => {
-            return $http.get(Utility.ApiEndPoints.games, id).then((result) => {
                 return result.data;
             });
         };
+
+        this.get = function (id: string): Models.Game {
+            return $http.get(Utility.ApiEndPoints.games + '/' + id).then((result) => {
+                return result.data;
+            });
+        };
+
 
         //this.getCategories = (): Models.Category => {
         //    return $http.get(Utility.ApiEndPoints.category).then((result) => {

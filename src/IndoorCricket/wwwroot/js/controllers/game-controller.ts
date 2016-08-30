@@ -1,10 +1,10 @@
-﻿/// <reference path="/services/game.ts" />
+﻿/// <reference path="../services/game.ts" />
 
 
 module Controllers {
     'use strict';
 
-    export class Home {
+    export class Game {
         static $inject = [
             Utility.Angular.$scope, Utility.Services.gameService
         ];
@@ -22,7 +22,7 @@ module Controllers {
 
         constructor($scope: any, gameService) {
             $scope.vm = this;
-            console.info("In Home Controller");
+            console.info("In Game Controller");
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
@@ -66,3 +66,51 @@ module Controllers {
 
     }
 }
+
+/*
+
+    function game_controller($location, $scope, $http) {
+var vm = this;
+vm.title = 'game_controller';
+
+$scope.title = "Loading games...";
+$scope.games = [];
+$scope.selected = {};
+$scope.working = true;
+
+$http.get('/api/games').success(function (data, status, headers, config) {
+    $scope.games = data;
+    $scope.working = false;
+}).error(function (data, status, headers, config) {
+    $scope.title = 'catastrophic failure';
+    $scope.working = true;
+});
+
+$scope.getGame = function (id) {
+
+    $http.get('/api/games/' + id).success(function (data, status, headers, config) {
+        $scope.selected = data;
+        console.info(data.Overs);
+        console.info($scope.selected);
+        $scope.working = false;
+    }).error(function (data, status, headers, config) {
+        $scope.title = "failed to find that game";
+        $scope.working = true;
+    })
+}
+
+$scope.newGame = function (gameData) {
+    $http.post('/api/games', { 'Id': null, 'Date': new Date(), 'Opposition': "Testing" }).success(function (data, status, headers, config) {
+        console.info("Game saved");
+    }).error(function (data, status, headers, config) {
+        console.info("Failed to save");
+    });
+};
+
+activate();
+
+function activate() { }
+    }
+
+
+*/
