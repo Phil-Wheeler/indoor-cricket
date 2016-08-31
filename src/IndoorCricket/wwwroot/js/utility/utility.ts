@@ -24,6 +24,7 @@
         public static home: string = '/';
         public static game: string = '/game'; 
         public static team: string = '/team';
+        public static score: string = '/score';
     }
 
     export class Templates {
@@ -31,6 +32,7 @@
         public static login: string = Utility.Urls.templates + 'login.html';
         public static game: string = Utility.Urls.templates + 'game.html';
         public static team: string = Utility.Urls.templates + 'team.html';
+        public static score: string = Utility.Urls.templates + 'score.html';
     }
 
     export class ApiEndPoints {
@@ -47,6 +49,7 @@
 
     export class Services {
         public static gameService: string = 'gameService';
+        public static scoreService: string = 'scoreService';
     }
 
     export class Filters {

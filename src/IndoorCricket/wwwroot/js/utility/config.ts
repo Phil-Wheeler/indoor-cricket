@@ -6,13 +6,16 @@
         //$templateCache.removeAll();
 
         $routeProvider.when(Utility.Urls.game, {
-            templateUrl: Utility.Templates.game,
+            templateUrl: Utility.Templates.game + '?v=112',
             controller: Controllers.Game
         }).when(Utility.Urls.home, {
             templateUrl: Utility.Templates.home,
             controller: Controllers.Home
         }).when(Utility.Urls.team, {
             templateUrl: Utility.Templates.team
+        }).when(Utility.Urls.score, {
+            templateUrl: Utility.Templates.score,
+            controller: Controllers.Score
         }).otherwise({
             redirectTo: Utility.Urls.home
             //templateUrl: Utility.Templates.home

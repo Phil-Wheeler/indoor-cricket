@@ -35,6 +35,7 @@
                         <li><a href="~/game">Game - Angular</a></li>
                         <li><a asp-controller="Home" asp-action="Game">Games</a></li>
                         <li><a asp-controller="Home" asp-action="Team">Teams</a></li>
+                        <li><a href="~/score">Score - Angular</a></li>
                         <li><a asp-controller="Home" asp-action="About">About</a></li>
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
@@ -81,10 +82,12 @@
 
             <!-- services -->
             <script src="~/js/services/game.js"></script>
+            <script src="~/js/services/score.js"></script>
 
             <!-- controllers -->
             <script src="~/js/controllers/home-controller.js"></script>
             <script src="~/js/controllers/game-controller.js"></script>
+            <script src="~/js/controllers/score-controller.js"></script>
 
         </environment>
         <environment names="Staging,Production">

@@ -26,7 +26,7 @@ module Controllers {
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
-            $scope.selectedGame = {};
+            $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
@@ -38,7 +38,7 @@ module Controllers {
             });
 
             $scope.get = function (id) {
-                $scope.selectedGame = gameService.get(id);
+                $scope.Game = gameService.get(id);
                 $scope.hideSelected = false;
             };
 

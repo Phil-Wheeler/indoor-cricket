@@ -1,9 +1,9 @@
-/// <reference path="../services/game.ts" />
+/// <reference path="../services/score.ts" />
 var Controllers;
 (function (Controllers) {
     'use strict';
-    var Game = (function () {
-        function Game($scope, gameService) {
+    var Score = (function () {
+        function Score($scope, scoreService) {
             $scope.vm = this;
             console.info("In Game Controller");
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
@@ -12,13 +12,13 @@ var Controllers;
             $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
-            gameService = gameService;
+            scoreService = scoreService;
             $scope.hideSelected = true;
-            gameService.games().then(function (g) {
+            scoreService.games().then(function (g) {
                 $scope.games = g;
             });
             $scope.get = function (id) {
-                $scope.Game = gameService.get(id);
+                $scope.Game = scoreService.get(id);
                 $scope.hideSelected = false;
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
@@ -37,12 +37,12 @@ var Controllers;
             //    var result = gameService.addCategory(model);
             //};
         }
-        Game.$inject = [
-            Utility.Angular.$scope, Utility.Services.gameService
+        Score.$inject = [
+            Utility.Angular.$scope, Utility.Services.scoreService
         ];
-        return Game;
+        return Score;
     }());
-    Controllers.Game = Game;
+    Controllers.Score = Score;
 })(Controllers || (Controllers = {}));
 /*
 

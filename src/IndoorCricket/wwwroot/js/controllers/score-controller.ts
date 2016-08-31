@@ -1,9 +1,26 @@
-/// <reference path="../services/game.ts" />
-var Controllers;
-(function (Controllers) {
+﻿/// <reference path="../services/score.ts" />
+
+
+module Controllers {
     'use strict';
-    var Game = (function () {
-        function Game($scope, gameService) {
+
+    export class Score {
+        static $inject = [
+            Utility.Angular.$scope, Utility.Services.scoreService
+        ];
+        //public nominations: Array<Models.Nomination>;
+        //public categories: Array<Models.Category>;
+        //private location;
+        //public newCategory: Models.Category;
+        //public newNomination: Models.Nomination;
+        //public nominee: Models.Nomination;
+        private scoreService;
+        //public addCategory: Function;
+        public Games: Array<Models.Game>;
+        public Game: Models.Game;
+        public get: Function;
+
+        constructor($scope: any, scoreService) {
             $scope.vm = this;
             console.info("In Game Controller");
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
@@ -12,38 +29,44 @@ var Controllers;
             $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
-            gameService = gameService;
+            scoreService = scoreService;
             $scope.hideSelected = true;
-            gameService.games().then(function (g) {
+
+
+            scoreService.games().then((g: Array<Models.Game>) => {
                 $scope.games = g;
             });
+
             $scope.get = function (id) {
-                $scope.Game = gameService.get(id);
+                $scope.Game = scoreService.get(id);
                 $scope.hideSelected = false;
             };
+
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;
             //});
+
             //nominationService.getCategories().then((cats: Array<Models.Category>) => {
             //    $scope.categories = cats;
             //    console.info($scope.categories);
             //});
+
             //$scope.nominate = function () {
             //    var nominee = $scope.newNomination;
             //    gameService.addNomination(nominee);
             //};
+
+
             //$scope.addCategory = function () {
             //    var model = $scope.newCategory;
             //    var result = gameService.addCategory(model);
             //};
         }
-        Game.$inject = [
-            Utility.Angular.$scope, Utility.Services.gameService
-        ];
-        return Game;
-    }());
-    Controllers.Game = Game;
-})(Controllers || (Controllers = {}));
+
+
+    }
+}
+
 /*
 
     function game_controller($location, $scope, $http) {
@@ -90,4 +113,4 @@ function activate() { }
     }
 
 
-*/ 
+*/

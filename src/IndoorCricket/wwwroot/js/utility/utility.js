@@ -36,6 +36,7 @@ var Utility;
         Urls.home = '/';
         Urls.game = '/game';
         Urls.team = '/team';
+        Urls.score = '/score';
         return Urls;
     }());
     Utility.Urls = Urls;
@@ -46,6 +47,7 @@ var Utility;
         Templates.login = Utility.Urls.templates + 'login.html';
         Templates.game = Utility.Urls.templates + 'game.html';
         Templates.team = Utility.Urls.templates + 'team.html';
+        Templates.score = Utility.Urls.templates + 'score.html';
         return Templates;
     }());
     Utility.Templates = Templates;
@@ -71,6 +73,7 @@ var Utility;
         function Services() {
         }
         Services.gameService = 'gameService';
+        Services.scoreService = 'scoreService';
         return Services;
     }());
     Utility.Services = Services;
