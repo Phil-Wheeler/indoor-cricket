@@ -15,6 +15,11 @@ var Services;
                 return result.data;
             });
         };
+        this.team = function (id) {
+            return $http.get(Utility.ApiEndPoints.teams + '/' + id).then(function (result) {
+                return result.data;
+            });
+        };
         //this.getCategories = (): Models.Category => {
         //    return $http.get(Utility.ApiEndPoints.category).then((result) => {
         //        var response = result.data;

@@ -40,6 +40,9 @@ module Controllers {
             $scope.get = function (id) {
                 $scope.Game = gameService.get(id);
                 $scope.hideSelected = false;
+
+                console.info($scope.Game);
+                return $scope.Game;
             };
 
             //nominationService.get().then((noms: Array<Models.Nomination>) => {

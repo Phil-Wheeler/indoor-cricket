@@ -6,7 +6,7 @@ module Controllers {
 
     export class Score {
         static $inject = [
-            Utility.Angular.$scope, Utility.Services.scoreService
+            Utility.Angular.$scope, Utility.Angular.$routeParams, Utility.Services.scoreService
         ];
         //public nominations: Array<Models.Nomination>;
         //public categories: Array<Models.Category>;
@@ -15,20 +15,25 @@ module Controllers {
         //public newNomination: Models.Nomination;
         //public nominee: Models.Nomination;
         private scoreService;
+        public getTeam: Function;
         //public addCategory: Function;
         public Games: Array<Models.Game>;
         public Game: Models.Game;
+        public Team: Models.Team;
         public get: Function;
 
-        constructor($scope: any, scoreService) {
+        constructor($scope: any, $routeParams: any, scoreService) {
             $scope.vm = this;
             console.info("In Game Controller");
+            console.info($routeParams);
+
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
             $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
+            $scope.Team = {};
             scoreService = scoreService;
             $scope.hideSelected = true;
 
@@ -42,6 +47,10 @@ module Controllers {
                 $scope.hideSelected = false;
             };
 
+            $scope.getTeam = function (id) {
+                console.info('calling team');
+                $scope.Team = scoreService.team(id);
+            };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;
             //});

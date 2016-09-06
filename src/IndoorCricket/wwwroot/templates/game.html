@@ -12,7 +12,7 @@
         </ul>
     </div>
     <div class="col-md-9">
-        <div id="game-overs" ng-model="Game">
+        <div id="game-overs">
             <h4>{{Game.Overs[0].Innings ? "Bowling" : "Batting"}}</h4>
             <ol>
                 <li ng-repeat="over in Game.Overs">{{over.Number}}</li>

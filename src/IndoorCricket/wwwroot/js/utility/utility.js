@@ -35,7 +35,7 @@ var Utility;
         Urls.api = Utility.Base.url + 'api/';
         Urls.home = '/';
         Urls.game = '/game';
-        Urls.team = '/team';
+        Urls.team = '/teams';
         Urls.score = '/score';
         return Urls;
     }());

@@ -14,15 +14,15 @@
         </ul>
     </div>
     <div class="col-md-9">
-        <h3 ng-show="!hideSelected">Game vs. {{selectedGame.Opposition}}</h3>
+        <h3 ng-show="!hideSelected">Game vs. {{Game.Opposition}}</h3>
 
         <div class="widget" ng-show="!hideSelected">
 
             <div class="widget-head">
                 <div class="pull-left">Batting</div>
             </div>
-            <div class="widget-content" ng-model="selectedGame">
-                <h2>{{selectedGame.Opposition}}</h2>
+            <div class="widget-content" ng-model="Game">
+                <h2>{{Game.Opposition}}</h2>
             </div>
 
         </div>

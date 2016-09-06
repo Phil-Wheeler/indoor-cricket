@@ -9,7 +9,7 @@
         }).when(Utility.Urls.home, {
             templateUrl: Utility.Templates.home,
             controller: Controllers.Home
-        }).when(Utility.Urls.team, {
+        }).when(Utility.Urls.team + '/:id', {
             templateUrl: Utility.Templates.team
         }).when(Utility.Urls.score, {
             templateUrl: Utility.Templates.score,

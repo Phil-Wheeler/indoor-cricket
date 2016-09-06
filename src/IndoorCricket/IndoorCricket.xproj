@@ -18,6 +18,7 @@
     <DnxInvisibleContent Include="bower.json" />
     <DnxInvisibleContent Include=".bowerrc" />
     <DnxInvisibleContent Include="package.json" />
+    <DnxInvisibleContent Include="Views\Score\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <DnxInvisibleCompile Include="Controllers\OversController.cs" />

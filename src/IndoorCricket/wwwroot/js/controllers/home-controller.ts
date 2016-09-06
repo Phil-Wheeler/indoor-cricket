@@ -17,7 +17,7 @@ module Controllers {
         private gameService;
         //public addCategory: Function;
         public Games: Array<Models.Game>;
-        public Game: Models.Game;
+        //public Game: Models.Game;
         public get: Function;
 
         constructor($scope: any, gameService) {
@@ -26,7 +26,7 @@ module Controllers {
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
-            $scope.selectedGame = {};
+            $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
@@ -38,7 +38,9 @@ module Controllers {
             });
 
             $scope.get = function (id) {
-                $scope.selectedGame = gameService.get(id);
+                var result = gameService.get(id);
+                $scope.Game = result;
+
                 $scope.hideSelected = false;
             };
 

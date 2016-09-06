@@ -27,13 +27,13 @@ var Models;
     }());
     Models.Opposition = Opposition;
     var Over = (function () {
-        function Over() {
+        function Over(id, number, innings, deliveries) {
         }
         return Over;
     }());
     Models.Over = Over;
     var Team = (function () {
-        function Team() {
+        function Team(id, name, players) {
         }
         return Team;
     }());

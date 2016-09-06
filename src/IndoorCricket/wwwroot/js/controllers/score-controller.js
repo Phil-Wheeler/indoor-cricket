@@ -3,15 +3,17 @@ var Controllers;
 (function (Controllers) {
     'use strict';
     var Score = (function () {
-        function Score($scope, scoreService) {
+        function Score($scope, $routeParams, scoreService) {
             $scope.vm = this;
             console.info("In Game Controller");
+            console.info($routeParams);
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
             $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
+            $scope.Team = {};
             scoreService = scoreService;
             $scope.hideSelected = true;
             scoreService.games().then(function (g) {
@@ -20,6 +22,10 @@ var Controllers;
             $scope.get = function (id) {
                 $scope.Game = scoreService.get(id);
                 $scope.hideSelected = false;
+            };
+            $scope.getTeam = function (id) {
+                console.info('calling team');
+                $scope.Team = scoreService.team(id);
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;
@@ -38,7 +44,7 @@ var Controllers;
             //};
         }
         Score.$inject = [
-            Utility.Angular.$scope, Utility.Services.scoreService
+            Utility.Angular.$scope, Utility.Angular.$routeParams, Utility.Services.scoreService
         ];
         return Score;
     }());

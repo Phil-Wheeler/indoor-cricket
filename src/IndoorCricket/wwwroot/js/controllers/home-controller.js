@@ -9,7 +9,7 @@ var Controllers;
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
-            $scope.selectedGame = {};
+            $scope.Game = {};
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             gameService = gameService;
@@ -18,7 +18,8 @@ var Controllers;
                 $scope.games = g;
             });
             $scope.get = function (id) {
-                $scope.selectedGame = gameService.get(id);
+                var result = gameService.get(id);
+                $scope.Game = result;
                 $scope.hideSelected = false;
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {

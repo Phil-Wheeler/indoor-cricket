@@ -5,11 +5,11 @@ module Models {
         public Id: string;
         public Date: Number;
         public Season: Number;
-        public Opposition: Models.Opposition;
+        public Opposition: string;
         public Overs: Array<Models.Over>;
         public Team: Models.Team;
 
-        constructor(id: string, date: Number, season: Number, opposition: Models.Opposition, overs: Array<Models.Over>, team: Models.Team) {
+        constructor(id: string, date: Number, season: Number, opposition: string, overs: Array<Models.Over>, team: Models.Team) {
             this.Id = id;
             this.Date = date;
             this.Season = season;
@@ -31,9 +31,22 @@ module Models {
     }
 
     export class Over {
+        public Id: string;
+        public Number: Number;
+        public Innings: Number;
+        public Deliveries: string;
+
+        constructor(id: string, number: Number, innings: Number, deliveries: string) {
+        }
     }
 
     export class Team {
+        public Id: string;
+        public Name: string;
+        public Players: Number;
+
+        constructor(id: string, name: string, players: Number) {
+        }
     }
 } 
 //var Models;

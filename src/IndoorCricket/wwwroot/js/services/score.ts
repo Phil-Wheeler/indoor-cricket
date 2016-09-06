@@ -20,6 +20,11 @@ module Services {
             });
         };
 
+        this.team = function (id: string): Models.Team {
+            return $http.get(Utility.ApiEndPoints.teams + '/' + id).then((result) => {
+                return result.data;
+            });
+        };
 
         //this.getCategories = (): Models.Category => {
         //    return $http.get(Utility.ApiEndPoints.category).then((result) => {
