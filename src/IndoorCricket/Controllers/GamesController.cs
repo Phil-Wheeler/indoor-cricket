@@ -55,33 +55,31 @@ namespace IndoorCricket.Controllers
 
         // PUT: api/Games/5
         [HttpPut("{id}")]
-        public IActionResult PutGame(Guid id, [FromBody] JObject value)
+        public IActionResult PutGame(Guid id, [FromBody] object game)
         {
-            //JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
-            //Player p = obj.Root.First.First<JToken>().First.ToObject<Player>();
-            Game game = value["game"].ToObject<Game>();
-            //var overs = obj.Root.First.First.Last.Last.ToObject<IEnumerable<Over>>();
-            //Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
+            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
+            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
 
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            if (id != game.Id)
+            if (id != g.Id)
             {
                 return HttpBadRequest();
             }
 
-            Over latestOver = game.Overs.LastOrDefault(o => o.Deliveries.Any());
-            Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
-            //latestDelivery.Batter = p; // assume all deliveries are batting games.
+            //_context.Entry<Game>(g).State = EntityState.Modified;
 
-            _context.Update(game);
+            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries != null);
+            Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
+
+            _context.Update(latestDelivery);
 
             try
             {
-                _context.SaveChanges(true);
+                //_context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,41 +93,26 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            //return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
-            return new Microsoft.AspNet.Mvc.HttpOkObjectResult(game);
+            return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
         }
 
         // POST: api/Games
         [HttpPost]
-        public IActionResult PostGame([FromBody] object game)
+        public IActionResult PostGame([FromBody] Game game)
         {
-
-            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
-            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
-
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            // Set up the default batting and bowling overs.
-            for (int i = 1; i <= 16; i++)
-            {
-                g.Overs.Add(new Over { Number = i, Innings = Innings.Batting });
-            }
-            for (int i = 1; i <=16; i++)
-            {
-                g.Overs.Add(new Over { Number = i, Innings = Innings.Bowling });
-            }
-
-            _context.Games.Add(g);
+            _context.Games.Add(game);
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (GameExists(g.Id))
+                if (GameExists(game.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -139,7 +122,7 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetGame", new { id = g.Id }, g);
+            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
         }
 
         // DELETE: api/Games/5

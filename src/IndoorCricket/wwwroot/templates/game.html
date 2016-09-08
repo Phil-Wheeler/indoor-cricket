@@ -1,0 +1,36 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <h2>Games</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <h3 ng-hide="!working">{{title}}</h3>
+        <ul ng-repeat="game in games" class="list-group">
+            <li ng-click="get(game.Id)" class="list-group-item list-group-item-info"><span ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span>: {{game.Opposition}}</li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div id="game-overs">
+            <h4>{{Game.Overs[0].Innings ? "Bowling" : "Batting"}}</h4>
+            <ol>
+                <li ng-repeat="over in Game.Overs">{{over.Number}}</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<tr>
+    <th>{{Player.Name}}</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>{{Player.Score}}</td>
+</tr>
+<!--<div>
+    <div ng-model="opener">{{Player.Name}}</div>
+    <div ng-model="game"></div>
+    <div ng-model="opener">{{Player.Score}}</div>
+</div>-->

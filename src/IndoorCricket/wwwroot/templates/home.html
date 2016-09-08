@@ -1,0 +1,33 @@
+﻿
+
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Games</h3>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info" ng-repeat="game in games" id="{{game.Id}}" ng-click="get(game.Id)">
+                <div style="cursor: pointer">
+                    <p><span class="meta">{{game.Date}}</span> <span class="pull-right" title="Season {{game.Season}}"><i class="glyphicon glyphicon-calendar"></i> {{game.Season}}</span></p>
+                    <p>{{game.Team.Name}} vs {{game.Opposition}}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9" ng-model="Game">
+        <h3 ng-show="!hideSelected">Game vs. {{Game.Opposition}}</h3>
+
+        <div class="widget" ng-show="!hideSelected">
+
+            <div class="widget-head">
+                <div class="pull-left">Batting</div>
+            </div>
+            <div class="widget-content">
+                <h2>{{Game.Opposition}}</h2>
+            </div>
+
+        </div>
+
+        <img src="/images/duck.png" />
+    </div>
+</div>
+
