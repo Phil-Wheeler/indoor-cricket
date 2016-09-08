@@ -45,26 +45,26 @@ namespace IndoorCricket.Models
 
     public enum Stroke
     {
-        Out     = -5,
-        Wide    = -2,
+        Out = -5,
+        Wide = -2,
         Dotball = 0,
-        Single  = 1,
-        Two     = 2,
-        Three   = 3,
-        Four    = 4,
-        Five    = 5,
-        Seven   = 7
+        Single = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4,
+        Five = 5,
+        Seven = 7
     }
 
     [Flags]
     public enum Dismissal
     {
-        Notout  = 0,
-        Caught  = 1,
-        Bowled  = 2,
-        Runout  = 4,
+        Notout = 0,
+        Caught = 1,
+        Bowled = 2,
+        Runout = 4,
         Stumped = 8,
-        Mankad  = 16,
-        LBW     = 32
+        Mankad = 16,
+        LBW = 32
     }
 }

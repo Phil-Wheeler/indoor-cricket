@@ -1,35 +1,29 @@
-@model IndoorCricket.Models.Game
+﻿
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-
-<div class="row" ng-controller="score_controller" ng-init="getTeam('@Model.Team.Id', '@Model.Id')">
+<div class="row">
+    <div class="col-md-12">
+        <h2>Scores</h2>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-2">
-        <h3>Game Details</h3>
-        <dl class="dl-horizontal">
+        <h3>Games</h3>
+        <dl class="dl-horizontal" ng-repeat="game in games" ng-click="setGame($index)">
             <dt>
-                @Html.DisplayNameFor(model => model.Date)
+                {{game.Date}}
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Date)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Opposition)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Opposition)
+                {{game.Opposition}}
             </dd>
         </dl>
 
         <h5>Player List</h5>
         <ul class="list-unstyled list-inline">
-            <li ng-repeat="player in team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
+            <li ng-repeat="player in Game.Team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
         </ul>
     </div>
     <div class="col-md-7">
-        <h3>Game vs. @Model.Opposition</h3>
+        <h3>Game vs. {{Game.Opposition}}</h3>
 
         <div class="widget">
 
@@ -51,15 +45,15 @@
                     <tbody>
                         <tr ng-repeat="row in batters">
                             <th>{{row.Batter.Name}}</th>
-                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" title="{{deliver.shot}}" class="scoresheet-delivery">{{deliver.runs}}</span></td>
+                            <td ng-repeat="over in row.Overs"><span ng-repeat="deliver in over.deliveries" class="scoresheet-delivery">{{deliver.runs}}</span></td>
                             <td>{{row.Runs}}</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
 
+            </div>
         </div>
-        
+
     </div>
     <div class="col-md-3">
         <h3>Score Controls</h3>
@@ -105,7 +99,7 @@
                         <tr>
                             <td><button class="btn btn-primary" ng-click="playShot(16, -5)" title="Mankad">M</button></td>
                             <td style="vertical-align: middle;">Runs</td>
-                            <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" ng-click="adjustRuns()" value="{{runs}}" /></td>
+                            <td colspan="2"><input type="number" id="run-value" class="form-control" min="-5" max="20" value="{{runs}}" /></td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -119,10 +113,3 @@
         </div>
     </div>
 </div>
-
-
-@section scripts
-{
-    <script src="~/app/innings-score-model.js"></script>
-    <script src="~/app/score-controller.js"></script>
-}

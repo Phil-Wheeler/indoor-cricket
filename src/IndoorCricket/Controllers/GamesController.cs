@@ -72,15 +72,14 @@ namespace IndoorCricket.Controllers
 
             //_context.Entry<Game>(g).State = EntityState.Modified;
 
-            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries.Any());
+            Over latestOver = g.Overs.LastOrDefault(o => o.Deliveries != null);
             Delivery latestDelivery = latestOver.Deliveries.LastOrDefault();
 
-            //_context.Update(latestDelivery);
-            _context.Update(g);
+            _context.Update(latestDelivery);
 
             try
             {
-                _context.SaveChanges(true);
+                //_context.SaveChanges(true);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -99,35 +98,21 @@ namespace IndoorCricket.Controllers
 
         // POST: api/Games
         [HttpPost]
-        public IActionResult PostGame([FromBody] object game)
+        public IActionResult PostGame([FromBody] Game game)
         {
-
-            JObject obj = JsonConvert.DeserializeObject<JObject>(game.ToString());
-            Game g = obj.Root.First.Value<JToken>().First.ToObject<Game>();
-
             if (!ModelState.IsValid)
             {
                 return HttpBadRequest(ModelState);
             }
 
-            // Set up the default batting and bowling overs.
-            for (int i = 1; i <= 16; i++)
-            {
-                g.Overs.Add(new Over { Number = i, Innings = Innings.Batting });
-            }
-            for (int i = 1; i <=16; i++)
-            {
-                g.Overs.Add(new Over { Number = i, Innings = Innings.Bowling });
-            }
-
-            _context.Games.Add(g);
+            _context.Games.Add(game);
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (GameExists(g.Id))
+                if (GameExists(game.Id))
                 {
                     return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -137,7 +122,7 @@ namespace IndoorCricket.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetGame", new { id = g.Id }, g);
+            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
         }
 
         // DELETE: api/Games/5
