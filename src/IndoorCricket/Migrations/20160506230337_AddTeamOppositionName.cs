@@ -17,6 +17,11 @@ namespace IndoorCricket.Migrations
                 name: "Opposition",
                 table: "Game",
                 nullable: true);
+            migrationBuilder.AddColumn<int>(
+                name: "Season",
+                table: "Game",
+                nullable: true);
+
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
                 table: "AspNetRoleClaims",
@@ -62,6 +67,7 @@ namespace IndoorCricket.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_ApplicationUser_UserId", table: "AspNetUserRoles");
             migrationBuilder.DropColumn(name: "Opposition", table: "Game");
+            migrationBuilder.DropColumn(name: "Season", table: "Game");
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
                 table: "AspNetRoleClaims",
