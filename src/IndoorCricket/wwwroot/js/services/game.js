@@ -13,7 +13,7 @@ var Services;
         this.get = function (id) {
             return $http.get(Utility.ApiEndPoints.games + '/' + id).then(function (result) {
                 var gameData = result.data;
-                var game = new Models.Game(gameData.Id, gameData.Date, gameData.Season, gameData.Opposition, gameData.Overs, gameData.Team);
+                var game = new Models.Game(gameData);
                 console.info(game);
                 return game;
             });

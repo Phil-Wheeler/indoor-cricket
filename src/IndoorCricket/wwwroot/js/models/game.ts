@@ -9,13 +9,13 @@ module Models {
         public Overs: Array<Models.Over>;
         public Team: Models.Team;
 
-        constructor(id: string, date: Number, season: Number, opposition: string, overs: Array<Models.Over>, team: Models.Team) {
-            this.Id = id;
-            this.Date = date;
-            this.Season = season;
-            this.Opposition = opposition;
-            this.Overs = overs;
-            this.Team = team;
+        constructor(game) {
+            this.Id = game.Id;
+            this.Date = game.Date;
+            this.Season = game.Season;
+            this.Opposition = game.Opposition;
+            this.Overs = game.Overs;
+            this.Team = game.Team;
         }
 
         public isEmpty = (): boolean => {
@@ -23,7 +23,8 @@ module Models {
         }
 
         public static createEmpty = (): Models.Game => {
-            return new Models.Game('-1', Date.now(), 0, null, null, null);
+            //return new Models.Game('-1', Date.now(), 0, null, null, null);
+            return null;
         }
     }
 

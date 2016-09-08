@@ -40,7 +40,9 @@ namespace IndoorCricket.Controllers
 
             Game game = _context.Games
                 .Include(o => o.Overs)
+                .ThenInclude(d => d.Deliveries)
                 .Include(t => t.Team)
+                .ThenInclude(p => p.Players)
                 .FirstOrDefault(g => g.Id == id);
 
             if (game == null)

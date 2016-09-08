@@ -2,20 +2,21 @@ var Models;
 (function (Models) {
     'use strict';
     var Game = (function () {
-        function Game(id, date, season, opposition, overs, team) {
+        function Game(game) {
             var _this = this;
             this.isEmpty = function () {
                 return (_this.Id === '-1' || _this.Id === '00000000-0000-0000-0000-000000000000');
             };
-            this.Id = id;
-            this.Date = date;
-            this.Season = season;
-            this.Opposition = opposition;
-            this.Overs = overs;
-            this.Team = team;
+            this.Id = game.Id;
+            this.Date = game.Date;
+            this.Season = game.Season;
+            this.Opposition = game.Opposition;
+            this.Overs = game.Overs;
+            this.Team = game.Team;
         }
         Game.createEmpty = function () {
-            return new Models.Game('-1', Date.now(), 0, null, null, null);
+            //return new Models.Game('-1', Date.now(), 0, null, null, null);
+            return null;
         };
         return Game;
     }());

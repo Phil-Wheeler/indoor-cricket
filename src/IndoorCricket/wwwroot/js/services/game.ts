@@ -18,7 +18,7 @@ module Services {
             return $http.get(Utility.ApiEndPoints.games + '/' + id).then((result) => {
 
                 var gameData = result.data;
-                var game = new Models.Game(gameData.Id, gameData.Date, gameData.Season, gameData.Opposition, gameData.Overs, gameData.Team);
+                var game = new Models.Game(gameData);
                 console.info(game);
                 return game;
             });

@@ -16,7 +16,7 @@ module Controllers {
         //public nominee: Models.Nomination;
         private scoreService;
         public getTeam: Function;
-        //public addCategory: Function;
+        public setGame: Function;
         public Games: Array<Models.Game>;
         public Game: Models.Game;
         public Team: Models.Team;
@@ -46,6 +46,14 @@ module Controllers {
                 $scope.Game = scoreService.get(id);
                 $scope.hideSelected = false;
             };
+
+            $scope.setGame = function (index) {
+                var id = $scope.games[index].Id;
+
+                scoreService.get(id).then((gm: Models.Game) => {
+                    $scope.Game = gm;
+                });
+            }
 
             $scope.getTeam = function (id) {
                 console.info('calling team');

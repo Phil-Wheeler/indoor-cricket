@@ -7,29 +7,23 @@
 </div>
 <div class="row">
     <div class="col-md-2">
-        <h3>Game Details</h3>
-        <dl class="dl-horizontal">
+        <h3>Games</h3>
+        <dl class="dl-horizontal" ng-repeat="game in games" ng-click="setGame($index)">
             <dt>
-                @Html.DisplayNameFor(model => model.Date)
+                {{game.Date}}
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Date)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Opposition)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Opposition)
+                {{game.Opposition}}
             </dd>
         </dl>
 
         <h5>Player List</h5>
         <ul class="list-unstyled list-inline">
-            <li ng-repeat="player in team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
+            <li ng-repeat="player in Game.Team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
         </ul>
     </div>
     <div class="col-md-7">
-        <h3>Game vs. @Model.Opposition</h3>
+        <h3>Game vs. {{Game.Opposition}}</h3>
 
         <div class="widget">
 

@@ -6,21 +6,23 @@ var Controllers;
         function Home($scope, gameService) {
             $scope.vm = this;
             console.info("In Home Controller");
-            //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
             $scope.Game = {};
-            //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
-            //this.location = $location;
             gameService = gameService;
             $scope.hideSelected = true;
             gameService.games().then(function (g) {
                 $scope.games = g;
             });
             $scope.get = function (id) {
-                var result = gameService.get(id);
-                $scope.Game = result;
+                gameService.get(id).then(function (gm) {
+                    $scope.Game = gm;
+                });
                 $scope.hideSelected = false;
+                //var result = gameService.get(id);
+                //$scope.Game = result;
+                //console.info(result);
+                //$scope.hideSelected = false;
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;

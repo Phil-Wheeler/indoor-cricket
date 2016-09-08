@@ -8,27 +8,17 @@ module Controllers {
         static $inject = [
             Utility.Angular.$scope, Utility.Services.gameService
         ];
-        //public nominations: Array<Models.Nomination>;
-        //public categories: Array<Models.Category>;
-        //private location;
-        //public newCategory: Models.Category;
-        //public newNomination: Models.Nomination;
-        //public nominee: Models.Nomination;
         private gameService;
-        //public addCategory: Function;
         public Games: Array<Models.Game>;
-        //public Game: Models.Game;
+        public Game: Models.Game;
         public get: Function;
 
         constructor($scope: any, gameService) {
             $scope.vm = this;
             console.info("In Home Controller");
-            //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
             $scope.Game = {};
-            //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
-            //this.location = $location;
             gameService = gameService;
             $scope.hideSelected = true;
 
@@ -38,10 +28,17 @@ module Controllers {
             });
 
             $scope.get = function (id) {
-                var result = gameService.get(id);
-                $scope.Game = result;
+
+                gameService.get(id).then((gm: Models.Game) => {
+                    $scope.Game = gm;
+                });
 
                 $scope.hideSelected = false;
+                //var result = gameService.get(id);
+                //$scope.Game = result;
+                //console.info(result);
+
+                //$scope.hideSelected = false;
             };
 
             //nominationService.get().then((noms: Array<Models.Nomination>) => {

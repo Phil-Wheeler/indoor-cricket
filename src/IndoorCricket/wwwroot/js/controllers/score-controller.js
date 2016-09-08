@@ -23,6 +23,12 @@ var Controllers;
                 $scope.Game = scoreService.get(id);
                 $scope.hideSelected = false;
             };
+            $scope.setGame = function (index) {
+                var id = $scope.games[index].Id;
+                scoreService.get(id).then(function (gm) {
+                    $scope.Game = gm;
+                });
+            };
             $scope.getTeam = function (id) {
                 console.info('calling team');
                 $scope.Team = scoreService.team(id);
