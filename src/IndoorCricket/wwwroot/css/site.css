@@ -20,6 +20,12 @@ textarea {
 
 .dl-horizontal dt { float: left; text-align: left; width: 90px; }
 .dl-horizontal dd { margin-left: 100px; }
+.list-item-underline { border-bottom: 1px solid #ccc; margin-bottom: 1em; padding-bottom: 5px; }
+
+
+/* ====== TEXT ====== */
+.meta { display: block; font-size: 90%; font-weight: bold; line-height: 1.15; text-transform: uppercase; }
+
 
 
 /* ====== SCORESHEETS ====== */
@@ -30,6 +36,11 @@ textarea {
 .score-panel tfoot th { vertical-align: middle; }
 
 .player-picklist { margin: 2px 5px 5px 0; }
+
+
+
+/* ====== CONTENT REGIONS ====== */
+.panel.content-panel { margin-bottom: 0; padding-top: 2em; }
 
 
 @media (min-width: 768px) {

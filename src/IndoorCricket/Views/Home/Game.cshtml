@@ -5,18 +5,77 @@
     </div>
 </div>
 <div class="row" ng-controller="game_controller">
-    <div class="col-md-3">
-        <h3 ng-hide="!working">{{title}}</h3>
-        <ul ng-repeat="game in games" class="list-group">
-            <li ng-click="getGame(game.Id)" class="list-group-item list-group-item-info"><span ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span>: {{game.Opposition}}</li>
-        </ul>
+    <div class="col-md-2">
+
+        <div class="widget">
+            <div class="widget-head">
+                <h4 ng-hide="working">{{title}}</h4>
+            </div>
+            <div class="widget-content">
+                <div class="panel panel-body">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="game in games" ng-click="getGame(game.Id)" class="list-item-underline"><span class="meta" ng-bind="game.Date | date:'dd MMM yyyy'">{{game.Date}}</span> {{game.Opposition}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-7">
         <div id="game-overs" ng-model="selected">
-            <h4>{{over.Innings ? "Bowling" : "Batting"}}</h4>
-            <ol>
-                <li ng-repeat="over in selected.Overs">{{over.Number}}</li>
-            </ol>
+
+            <div class="widget">
+                <div class="widget-head"><h4>{{over.Innings ? "Bowling" : "Batting"}}</h4></div>
+                <div class="widget-content">
+                    <div class="panel content-panel">
+
+                        <div class="panel-heading">
+                            <h4>Player List</h4>
+                            <ul class="list-unstyled list-inline">
+                                <li ng-repeat="player in selected.Team.Players" class="player-picklist btn btn-primary">{{player.Name}}</li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <ol>
+                                <li ng-repeat="over in selected.Overs | filter:{Innings:0}">{{over.Number}} {{over.Id}}  {{over.Deliveries.length}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel content-panel">
+                        <div class="panel-heading"><h4>Bowling</h4></div>
+                        <div class="panel-body">
+                            <ol>
+                                <li ng-repeat="over in selected.Overs | filter:{Innings:1}">{{over.Number}} {{over.Id}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget">
+            <div class="widget-head">
+                <div class="pull-left">New Game</div>
+            </div>
+            <div class="widget-content">
+                <div class="panel panel-body">
+                    <div class="form-group">
+                        <label for="new-game-date">Date</label>
+                        <input type="datetime" class="form-control" id="new-game-date" ng-model="game.Date" placeholder="Game date">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-game-team">Team</label>
+                        <select ng-model="game.Team" class="form-control">
+                            <option id="{{team.Id}}" value="{{$index}}" ng-repeat="team in teams">{{team.Name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-game-opposition">Opposition</label>
+                        <input type="text" class="form-control" id="new-game-opposition" ng-model="game.Opposition" placeholder="Opposition">
+                    </div>
+                    <button type="submit" class="btn btn-default" ng-click="newGame()">Save</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -25,4 +84,13 @@
 @section scripts
 {
     <script src="~/app/game-controller.js"></script>
+    <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('#new-game-date').datepicker({ format: 'dd MM yyyy' });
+
+        })
+    </script>
 }

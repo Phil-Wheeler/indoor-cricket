@@ -1685,6 +1685,8 @@ border:1px solid #eee;
 	margin-top:10px;
 }
 
+.widget-content { padding: 7px 12px; }
+
 .widget-content ol#slist{
 	padding:0px;
 }

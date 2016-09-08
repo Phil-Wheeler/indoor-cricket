@@ -9,146 +9,194 @@
 
     function score_controller($location, $scope, $http, $element) {
         /* jshint validthis:true */
+        var dirty = false;
+
+        var StrokeEnum = Object.freeze({
+            "X": -5,
+            "W": -2,
+            ".": 0,
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "7": 7
+        });
+
+        var OutEnum = Object.freeze({
+            "NO": 0,
+            "C": 1,
+            "B": 2,
+            "R": 4,
+            "St": 8,
+            "M": 16,
+            "LBW": 32
+        });
+
+
+        function string_of_enum(e,value) 
+        {
+            for (var k in e) if (e[k] == value) return k;
+            return null;
+        }
+
 
         $scope.title = "Loading scores...";
         $scope.game = {};
-        $scope.over = 1;
+        //$scope.over = 1;
         $scope.overs = [];
         $scope.delivery = 0;
         $scope.deliveries = [];
         $scope.team = {};
         $scope.selected = {};
-        $scope.striker = {};
-        $scope.nonstriker = {};
         $scope.shot = 0;
         $scope.runs = 0;
         $scope.working = true;
-        $scope.opener = {};
-        $scope.runner = {};
         $scope.batters = [];
+        $scope.partnerships = [];
         $scope.onStrike = 0;
+        $scope.frames = [];
 
-        $scope.scoreTemplateUrl = '/app/games.html';
+        var saved = false;
+        var over = 1;
+
+        $scope.init = function ()
+        {
+            //console.info($location);
+        }
 
         $scope.getTeam = function (teamId, gameId) {
+
             $http.get('/api/games/' + gameId).success(function (data, status, headers, config) {
                 $scope.game = data;
-                console.info(data);
                 angular.forEach(data.Overs, function (over) {
                     over.Deliveries = [];
                     $scope.overs.push(new Models.Over(over));
                 });
+                $scope.team = data.Team;
             });
 
-            $http.get('/api/teams/' + teamId).success(function (data, status, headers, config) {
-                $scope.team = data;
-                $scope.working = false;
-            })
         }
 
         $scope.selectPlayer = function (index) {
-            if ($scope.striker.name == undefined) {
-                $scope.striker = $scope.team.Players[index];
-            }
-            else {
-                $scope.nonstriker = $scope.team.Players[index];
+            dirty = true;
+
+            var frame = new Models.Frame($scope.team.Players[index]);
+            for (var i = 0; i < 4; i++) {
+                var ov = $scope.overs[i];
+                frame.Overs.push(ov);
             }
 
-            var row = {};
-            row.Batter = $scope.team.Players[index];
-            row.Overs = $scope.overs.slice(0, 4);
-            row.Runs = 0;
-            $scope.batters.push(row);
+            var setPlayers = $($scope.frames).map(function (i, e) {
+                return e.player;
+            });
+
+            var alreadyAdded = $.inArray(frame.Player, setPlayers.get()) > -1;
+
+            if (!alreadyAdded) {
+                $scope.frames.push(frame);
+                $scope.batters.push(frame.Player);
+            }
+        }
+
+        $scope.adjustRuns = function () {
+            dirty = true;
+            var currentDelivery = $scope.delivery;
+            var dlvy = $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries[currentDelivery];
+            dlvy.runs = parseInt($('#run-value', $element)[0].value); // There's surely a better way but this will do for now
         }
 
         $scope.playShot = function (shot, runs) {
-            var table = $('#scoresheet-table');
-
-            if ($scope.opener.Player == undefined) {
-                $scope.opener.Player = $scope.striker;
-                $scope.opener.Score = 0;
-                $scope.runner.Player = $scope.nonstriker;
-                $scope.runner.Score = 0;
-            }
+            dirty = true;
+            //var table = $('#scoresheet-table');
+            //var frm = $scope.frames.length - 1;
             
+            var frame = $scope.frames[$scope.frames.length - 1];
             $scope.shot = shot;
             $scope.runs = runs;
-            $('#run-value', $element)[0].value = (runs);
+            $('#run-value', $element)[0].value = runs;
+            
+            // get the current over
+            var o = frame.Overs[over - 1];
+            var len = o.deliveries.length;
 
             var deliv = {};
             deliv.id = 0;
-            deliv.Number = $scope.delivery;
+            deliv.Number = $scope.delivery + 1;
             deliv.Stroke = shot;
-            deliv.Runs = runs;
+            deliv.Runs = $scope.runs;
             deliv.Dismissal = (runs == -5 ? shot : 0);
-            deliv.Player = $scope.batters[$scope.onStrike].Player;
+            deliv.Batter = frame.Player;
+            deliv.Bowler = null;
 
             var delivery = new Models.Delivery(deliv);
-            console.info($scope.batters);
+
+
+
+            if (o.deliveries.length == 0) {
+                console.info("no deliveries yet");
+                o.deliveries.push(deliv);
+            } else {
+                console.info("deliveries");
+                console.info(o.deliveries[len - 1]);
+                if (o.deliveries[len - 1].id == 0) {
+                    o.deliveries[len - 1] = deliv;
+                } else {
+                    o.deliveries.push(deliv);
+                }
+            }
+
+            /*
+            if (lastShot === undefined || lastShot.id == 0) {
+                lastShot.runs = $scope.runs;
+            }
+            else {
+                frame.shots.push(deliv);
+            }
 
             $scope.batters[$scope.onStrike].Runs += runs;
-            $scope.batters[$scope.onStrike].Overs[$scope.over - 1].Number = $scope.delivery;
-            $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.push(delivery);
+
+            if (saved) {
+                $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries.push(delivery);
+                saved = false;
+            }
+            else {
+                $scope.batters[$scope.onStrike].Overs[$scope.over - 1].deliveries[$scope.delivery] = delivery;
+            }
+            */
         }
 
         $scope.saveDelivery = function () {
-            var val = $('#run-value', $element)[0].value;
-            console.info("Batsman: " + $scope.striker.Name + ", Shot: " + $scope.shot + " for " + val + " runs. ");
 
-            if ($scope.game.Overs[$scope.over - 1].Deliveries == null) {
-                $scope.game.Overs[$scope.over - 1].Deliveries = [];
-            }
-            
-            console.info("Over: " + $scope.over + ", Delivery: " + $scope.delivery);
-            if ($scope.delivery > 6) {
-                $scope.over++;
-                $scope.delivery = 1;
-            }
-            else {
-                $scope.delivery++;
-            }
+            //var currentOver = $scope.frames[$scope.frames.length - 1].Overs[over - 1];
+            //var delivery = currentOver.deliveries[$scope.delivery];
 
-            if ($scope.striker == undefined) {
-                alert("No batsman selected");
-            }
-            else {
+            //console.info(currentOver);
+            //$scope.game.Overs[currentOver.number - 1].Deliveries.push(delivery);
+            console.info($scope.game);
 
 
-                var delivery = {};
-                delivery.Id = 0;
-                delivery.Number = $scope.delivery;
-                delivery.Batter = $scope.striker;
-                //delivery.Bowler = $scope.nonstriker;
-                delivery.Runs = $scope.runs;
-                delivery.Stroke = $scope.shot;
-                delivery.Dismissal = ($scope.runs == -5) ? $scope.shot : 0;
+            try {
 
-
-                $scope.game.Overs[$scope.over - 1].Deliveries.push(delivery);
-                console.info($scope.game);
 
                 $http.put('/api/games/' + $scope.game.Id, { game: $scope.game }).success(function (data, status, headers, config) {
-                    console.info(headers);
+                    if ($scope.delivery > 6) {
+                        $scope.over++;
+                        $scope.delivery = 1;
+                    }
+                    else {
+                        $scope.delivery++;
+                    }
+                    saved = true;
+                    dirty = false;
                 });
+
+            }
+            catch (e) {
+                console.warn("Failed to save");
             }
         }
 
-        //$scope.addOver = function (over) {
-
-        //    console.info("Game: " + gameId + ", Innings: " + inningsType + ", Over #: " + number);
-
-        //    $http.post('/api/overs/' + gameId, { Number: over.Number, Innings: over.Innings }).success(function (data, status, headers, config) {
-
-        //    })
-        //}
-
-        //$http.get('/api/games').success(function (data, status, headers, config) {
-        //    $scope.games = data;
-        //    $scope.working = false;
-        //}).error(function (data, status, headers, config) {
-        //    $scope.title = 'catastrophic failure';
-        //    $scope.working = true;
-        //});
 
         $scope.getGame = function (id) {
 

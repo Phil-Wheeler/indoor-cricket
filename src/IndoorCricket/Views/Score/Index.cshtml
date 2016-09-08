@@ -12,7 +12,7 @@
             <ul id="game-list" class="list-group">
                 @foreach (Game game in Model.OrderByDescending(g => g.Date))
                 {
-                    <li class="list-group-item" ng-click="Select(team.Id)">
+                    <li class="list-group-item" ng-click="Select(@game.Id)">
                         <div id="@game.Id" class="list-group-item-text"><strong>@game.Opposition</strong> <span class="meta" style="display: block;">@game.Date.ToString("MMM dd, yyyy HH:mm")</span></div>
                     </li>
                 }
@@ -24,7 +24,7 @@
             </ul>*@
     </div>
     <div class="col-md-7">
-        <h3>@Model.FirstOrDefault().Team.Name</h3>
+        <h3>{{selectedTeam.Name}}</h3>
 
         <div class="widget">
 

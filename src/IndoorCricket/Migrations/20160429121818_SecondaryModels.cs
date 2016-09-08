@@ -20,7 +20,7 @@ namespace IndoorCricket.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GameId = table.Column<int>(nullable: true),
+                    GameId = table.Column<Guid>(nullable: true),
                     Innings = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false)
                 },
