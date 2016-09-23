@@ -33,12 +33,31 @@ var Models;
         return Over;
     }());
     Models.Over = Over;
+    var Delivery = (function () {
+        function Delivery(id, number, stroke, dismissal, runs, bowler, batter) {
+        }
+        Delivery.createEmpty = function () {
+            return new Models.Delivery('-1', 1, 1, 0, 0, '', '');
+            //return null;
+        };
+        return Delivery;
+    }());
+    Models.Delivery = Delivery;
     var Team = (function () {
-        function Team(id, name, players) {
+        function Team(team) {
+            this.Id = team.Id;
+            this.Name = team.Name;
+            this.Players = team.Players;
         }
         return Team;
     }());
     Models.Team = Team;
+    var Player = (function () {
+        function Player(id, name, email) {
+        }
+        return Player;
+    }());
+    Models.Player = Player;
 })(Models || (Models = {}));
 //var Models;
 //(function (Models) {

@@ -4,9 +4,35 @@ var Controllers;
     'use strict';
     var Score = (function () {
         function Score($scope, $routeParams, scoreService) {
+            var StrokeEnum = Object.freeze({
+                "X": -5,
+                "W": -2,
+                ".": 0,
+                "1": 1,
+                "2": 2,
+                "3": 3,
+                "4": 4,
+                "5": 5,
+                "7": 7
+            });
+            var OutEnum = Object.freeze({
+                "NO": 0,
+                "C": 1,
+                "B": 2,
+                "R": 4,
+                "St": 8,
+                "M": 16,
+                "LBW": 32
+            });
+            function string_of_enum(e, value) {
+                for (var k in e)
+                    if (e[k] == value)
+                        return k;
+                return null;
+            }
             $scope.vm = this;
-            console.info("In Game Controller");
-            console.info($routeParams);
+            var overNumber = 0;
+            var deliveryNumber = 0;
             //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
@@ -14,13 +40,17 @@ var Controllers;
             //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
             //this.location = $location;
             $scope.Team = {};
+            $scope.frames = [];
             scoreService = scoreService;
             $scope.hideSelected = true;
+            $scope.striker = {};
+            $scope.lastShotRuns = 0;
             scoreService.games().then(function (g) {
                 $scope.games = g;
             });
             $scope.get = function (id) {
                 $scope.Game = scoreService.get(id);
+                $scope.Game.Date = $scope.Game.Date; // dateFns.format($scope.Game.Date, 'DD/MM/YYYY');
                 $scope.hideSelected = false;
             };
             $scope.setGame = function (index) {
@@ -32,6 +62,70 @@ var Controllers;
             $scope.getTeam = function (id) {
                 console.info('calling team');
                 $scope.Team = scoreService.team(id);
+            };
+            $scope.selectPlayer = function (index) {
+                $scope.striker = $scope.Game.Team.Players[index];
+                var frame = Models.Frame.createEmpty();
+                frame.Player = $scope.striker;
+                frame.Overs = [];
+                for (var i = 0; i < 4; i++) {
+                    var ov = $scope.Game.Overs[i];
+                    frame.Overs.push(ov);
+                }
+                $scope.frames.push(frame);
+            };
+            $scope.playShot = function (shot, runs) {
+                $scope.lastShotRuns = runs;
+                var dliv = Models.Delivery.createEmpty();
+                dliv.Number = ($scope.Game.Overs[overNumber].Deliveries.length) + 1;
+                dliv.Batter = $scope.striker;
+                dliv.Stroke = shot;
+                dliv.Runs = runs;
+                dliv.Dismissal = (runs == -5 ? shot : 0);
+                //$scope.Game.Overs[overNumber].Deliveries.push(dliv);
+                $scope.frames[0].Overs[overNumber].Deliveries = [];
+                $scope.frames[0].Overs[overNumber].Deliveries.push(dliv);
+                console.info($scope.frames);
+                /*
+                dirty = true;
+                //var table = $('#scoresheet-table');
+                //var frm = $scope.frames.length - 1;
+
+                var frame = $scope.frames[$scope.frames.length - 1];
+                $scope.shot = shot;
+                $scope.runs = runs;
+                $('#run-value', $element)[0].value = runs;
+
+                // get the current over
+                var o = frame.Overs[over - 1];
+                var len = o.deliveries.length;
+
+                var deliv = {};
+                deliv.id = 0;
+                deliv.Number = $scope.delivery + 1;
+                deliv.Stroke = shot;
+                deliv.Runs = $scope.runs;
+                deliv.Dismissal = (runs == -5 ? shot : 0);
+                deliv.Batter = frame.Player;
+                deliv.Bowler = null;
+
+                var delivery = new Models.Delivery(deliv);
+
+
+
+                if (o.deliveries.length == 0) {
+                    console.info("no deliveries yet");
+                    o.deliveries.push(deliv);
+                } else {
+                    console.info("deliveries");
+                    console.info(o.deliveries[len - 1]);
+                    if (o.deliveries[len - 1].id == 0) {
+                        o.deliveries[len - 1] = deliv;
+                    } else {
+                        o.deliveries.push(deliv);
+                    }
+                }
+                */
             };
             //nominationService.get().then((noms: Array<Models.Nomination>) => {
             //    $scope.nominations = noms;

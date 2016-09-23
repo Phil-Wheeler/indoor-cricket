@@ -41,13 +41,43 @@ module Models {
         }
     }
 
+    export class Delivery {
+        public Id: string;
+        public Number: Number;
+        public Stroke: Number;
+        public Dismissal: Number;
+        public Runs: Number;
+        public Bowler: string;
+        public Batter: string;
+
+        constructor(id: string, number: Number, stroke: Number, dismissal: Number, runs: Number, bowler: string, batter: string) {
+        }
+
+        public static createEmpty = (): Models.Delivery => {
+            return new Models.Delivery('-1', 1, 1, 0, 0, '', '');
+            //return null;
+        }
+
+    }
+
     export class Team {
         public Id: string;
         public Name: string;
-        public Players: Number;
+        public Players: Array<Models.Player>;
 
-        constructor(id: string, name: string, players: Number) {
+        constructor(team) {
+            this.Id = team.Id;
+            this.Name = team.Name;
+            this.Players = team.Players;
         }
+    }
+
+    export class Player {
+        public Id: string;
+        public Name: string;
+        public Email: string;
+
+        constructor(id: string, name: string, email: string) { }
     }
 } 
 //var Models;

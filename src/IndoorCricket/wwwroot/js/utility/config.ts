@@ -3,6 +3,7 @@
 
     app.config(function ($routeProvider, $locationProvider) {
         console.info('routes');
+
         //$templateCache.removeAll();
 
         $routeProvider.when(Utility.Urls.game, {
@@ -14,7 +15,7 @@
         }).when(Utility.Urls.team + '/:id', {
             templateUrl: Utility.Templates.team
         }).when(Utility.Urls.score, {
-            templateUrl: Utility.Templates.score,
+            templateUrl: Utility.Templates.score + '?v=003',
             controller: Controllers.Score
         }).otherwise({
             redirectTo: Utility.Urls.home
