@@ -7,7 +7,7 @@
         <ul class="list-group">
             <li class="list-group-item list-group-item-info" ng-repeat="game in games" id="{{game.Id}}" ng-click="get(game.Id)">
                 <div style="cursor: pointer">
-                    <p><span class="meta">{{game.Date}}</span> <span class="pull-right" title="Season {{game.Season}}"><i class="glyphicon glyphicon-calendar"></i> {{game.Season}}</span></p>
+                    <p><span class="meta">{{game.Date | dateFilter}}</span> <span class="pull-right" title="Season {{game.Season}}"><i class="glyphicon glyphicon-calendar"></i> {{game.Season}}</span></p>
                     <p>{{game.Team.Name}} vs {{game.Opposition}}</p>
                 </div>
             </li>

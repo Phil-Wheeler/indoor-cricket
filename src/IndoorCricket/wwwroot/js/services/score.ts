@@ -16,7 +16,7 @@ module Services {
 
         this.get = function (id: string): Models.Game {
             return $http.get(Utility.ApiEndPoints.games + '/' + id).then((result) => {
-                return result.data;
+                return new Models.Game(result.data);
             });
         };
 

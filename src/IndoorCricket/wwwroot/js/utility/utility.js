@@ -47,7 +47,7 @@ var Utility;
         Templates.login = Utility.Urls.templates + 'login.html';
         Templates.game = Utility.Urls.templates + 'game.html';
         Templates.team = Utility.Urls.templates + 'team.html';
-        Templates.score = Utility.Urls.templates + 'score.html';
+        Templates.score = Utility.Urls.templates + 'score.html?v=1';
         return Templates;
     }());
     Utility.Templates = Templates;

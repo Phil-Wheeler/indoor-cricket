@@ -32,7 +32,7 @@
         public static login: string = Utility.Urls.templates + 'login.html';
         public static game: string = Utility.Urls.templates + 'game.html';
         public static team: string = Utility.Urls.templates + 'team.html';
-        public static score: string = Utility.Urls.templates + 'score.html';
+        public static score: string = Utility.Urls.templates + 'score.html?v=1';
     }
 
     export class ApiEndPoints {

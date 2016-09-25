@@ -1,4 +1,5 @@
 ﻿/// <reference path="../services/score.ts" />
+/// <reference path="../utility/date-filter.ts" />
 
 
 module Controllers {
@@ -6,7 +7,7 @@ module Controllers {
 
     export class Score {
         static $inject = [
-            Utility.Angular.$scope, Utility.Angular.$routeParams, Utility.Services.scoreService
+            Utility.Angular.$scope, Utility.Angular.$routeParams, Utility.Services.scoreService, Utility.Filters.dateFilter
         ];
         //public nominations: Array<Models.Nomination>;
         //public categories: Array<Models.Category>;
@@ -23,7 +24,7 @@ module Controllers {
         public Team: Models.Team;
         public get: Function;
 
-        constructor($scope: any, $routeParams: any, scoreService) {
+        constructor($scope: any, $routeParams: any, scoreService, dateFilter) {
 
             var StrokeEnum = Object.freeze({
                 "X": -5,
@@ -56,12 +57,9 @@ module Controllers {
             var overNumber = 0;
             var deliveryNumber = 0;
 
-            //$scope.newCategory = new Models.Category(Utility.GuidBuilder.New(), '', '');
             $scope.games = [];
             $scope.categories = [];
             $scope.Game = {};
-            //$scope.newNomination = new Models.Nomination(Utility.GuidBuilder.New(), '', null, '', new Date(), false);
-            //this.location = $location;
             $scope.Team = {};
             $scope.frames = [];
             scoreService = scoreService;
@@ -99,9 +97,12 @@ module Controllers {
                 frame.Player = $scope.striker;
                 frame.Overs = [];
 
-                for (var i = 0; i < 4; i++) {
-                    var ov = $scope.Game.Overs[i];
-                    frame.Overs.push(ov);
+                var block = $scope.frames.length;
+
+                for (var i = (block * 4); i < (block * 4) + 4; i++) {
+                    //var ov = $scope.Game.Overs[i];
+                    var ovr = Models.Over.createEmpty(i + 1);
+                    frame.Overs.push(ovr);
                 }
 
                 $scope.frames.push(frame);
@@ -119,10 +120,14 @@ module Controllers {
                 dliv.Dismissal = (runs == -5 ? shot : 0);
 
                 //$scope.Game.Overs[overNumber].Deliveries.push(dliv);
-                $scope.frames[0].Overs[overNumber].Deliveries = [];
                 $scope.frames[0].Overs[overNumber].Deliveries.push(dliv);
 
                 console.info($scope.frames);
+
+                if ($scope.frames[0].Overs[overNumber].Deliveries.length == 6) {
+                    overNumber++;
+                }
+
                 /*
                 dirty = true;
                 //var table = $('#scoresheet-table');
@@ -165,75 +170,10 @@ module Controllers {
                 */
             }
 
-            //nominationService.get().then((noms: Array<Models.Nomination>) => {
-            //    $scope.nominations = noms;
-            //});
-
-            //nominationService.getCategories().then((cats: Array<Models.Category>) => {
-            //    $scope.categories = cats;
-            //    console.info($scope.categories);
-            //});
-
-            //$scope.nominate = function () {
-            //    var nominee = $scope.newNomination;
-            //    gameService.addNomination(nominee);
-            //};
-
-
-            //$scope.addCategory = function () {
-            //    var model = $scope.newCategory;
-            //    var result = gameService.addCategory(model);
-            //};
+            $scope.commit = function () {
+            }
         }
 
 
     }
 }
-
-/*
-
-    function game_controller($location, $scope, $http) {
-var vm = this;
-vm.title = 'game_controller';
-
-$scope.title = "Loading games...";
-$scope.games = [];
-$scope.selected = {};
-$scope.working = true;
-
-$http.get('/api/games').success(function (data, status, headers, config) {
-    $scope.games = data;
-    $scope.working = false;
-}).error(function (data, status, headers, config) {
-    $scope.title = 'catastrophic failure';
-    $scope.working = true;
-});
-
-$scope.getGame = function (id) {
-
-    $http.get('/api/games/' + id).success(function (data, status, headers, config) {
-        $scope.selected = data;
-        console.info(data.Overs);
-        console.info($scope.selected);
-        $scope.working = false;
-    }).error(function (data, status, headers, config) {
-        $scope.title = "failed to find that game";
-        $scope.working = true;
-    })
-}
-
-$scope.newGame = function (gameData) {
-    $http.post('/api/games', { 'Id': null, 'Date': new Date(), 'Opposition': "Testing" }).success(function (data, status, headers, config) {
-        console.info("Game saved");
-    }).error(function (data, status, headers, config) {
-        console.info("Failed to save");
-    });
-};
-
-activate();
-
-function activate() { }
-    }
-
-
-*/

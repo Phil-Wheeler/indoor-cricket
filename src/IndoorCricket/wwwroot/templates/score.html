@@ -7,20 +7,31 @@
 </div>
 <div class="row">
     <div class="col-md-2">
-        <h3>Games</h3>
-        <dl class="dl-horizontal" ng-repeat="game in games" ng-click="setGame($index)">
-            <dt>
-                {{game.Date}}
-            </dt>
-            <dd>
-                {{game.Opposition}}
-            </dd>
-        </dl>
+        
+        <div class="widget">
+            <div class="widget-head">Games</div>
+            <div class="widget-content">
+                <dl class="game-list-short" ng-repeat="game in games" ng-click="setGame($index)">
+                    <dt>
+                        {{game.Date | dateFilter}}
+                    </dt>
+                    <dd>
+                        {{game.Opposition}}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        
 
-        <h5>Player List</h5>
-        <ul class="list-unstyled list-inline">
-            <li ng-repeat="player in Game.Team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
-        </ul>
+        <div class="widget">
+            <div class="widget-head">Player List</div>
+            <div class="widget-content">
+                <ul class="list-unstyled list-inline">
+                    <li ng-repeat="player in Game.Team.Players" class="player-picklist btn btn-primary" ng-class="{'btn-success' : striker == player}" ng-click="selectPlayer($index)">{{player.Name}}</li>
+                </ul>
+            </div>
+        </div>
+        
     </div>
     <div class="col-md-7">
         <h3>Game vs. {{Game.Opposition}}</h3>
@@ -104,7 +115,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="4"><button class="btn btn-warning" type="button" ng-click="saveDelivery()">Save</button></th>
+                            <th colspan="4"><button class="btn btn-warning" type="button" ng-click="commit()">Save</button></th>
                         </tr>
                     </tfoot>
                 </table>

@@ -6,6 +6,10 @@ var Models;
     'use strict';
     var Frame = (function () {
         function Frame(Player, Overs) {
+            var _this = this;
+            this.Runs = function () {
+                return _this.Overs.length;
+            };
         }
         Frame.createEmpty = function () {
             return new Models.Frame(null, []);

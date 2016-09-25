@@ -12,7 +12,7 @@ var Services;
         };
         this.get = function (id) {
             return $http.get(Utility.ApiEndPoints.games + '/' + id).then(function (result) {
-                return result.data;
+                return new Models.Game(result.data);
             });
         };
         this.team = function (id) {

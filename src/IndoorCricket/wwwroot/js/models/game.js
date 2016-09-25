@@ -8,7 +8,7 @@ var Models;
                 return (_this.Id === '-1' || _this.Id === '00000000-0000-0000-0000-000000000000');
             };
             this.Id = game.Id;
-            this.Date = game.Date;
+            this.Date = new Date(game.Date.toString());
             this.Season = game.Season;
             this.Opposition = game.Opposition;
             this.Overs = game.Overs;
@@ -29,7 +29,14 @@ var Models;
     Models.Opposition = Opposition;
     var Over = (function () {
         function Over(id, number, innings, deliveries) {
+            this.Id = id;
+            this.Number = number;
+            this.Innings = innings;
+            this.Deliveries = deliveries;
         }
+        Over.createEmpty = function (inn) {
+            return new Models.Over(Utility.GuidBuilder.New(), inn, 0, []);
+        };
         return Over;
     }());
     Models.Over = Over;

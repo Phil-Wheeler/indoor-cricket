@@ -3,7 +3,7 @@ module Models {
     'use strict';
     export class Game {
         public Id: string;
-        public Date: Number;
+        public Date: Date;
         public Season: Number;
         public Opposition: string;
         public Overs: Array<Models.Over>;
@@ -11,7 +11,7 @@ module Models {
 
         constructor(game) {
             this.Id = game.Id;
-            this.Date = game.Date;
+            this.Date = new Date(game.Date.toString());
             this.Season = game.Season;
             this.Opposition = game.Opposition;
             this.Overs = game.Overs;
@@ -35,9 +35,17 @@ module Models {
         public Id: string;
         public Number: Number;
         public Innings: Number;
-        public Deliveries: string;
+        public Deliveries: Array<Models.Delivery>;
 
-        constructor(id: string, number: Number, innings: Number, deliveries: string) {
+        constructor(id: string, number: Number, innings: Number, deliveries: Array<Models.Delivery>) {
+            this.Id = id;
+            this.Number = number;
+            this.Innings = innings;
+            this.Deliveries = deliveries;
+        }
+
+        public static createEmpty = (inn): Models.Over => {
+            return new Models.Over(Utility.GuidBuilder.New(), inn, 0, []);
         }
     }
 

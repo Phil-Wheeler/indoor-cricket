@@ -15,5 +15,9 @@ module Models {
         public static createEmpty = (): Models.Frame => {
             return new Models.Frame(null, []);
         }
+
+        public Runs = (): Number => {
+            return this.Overs.length;
+        }
     }
 }
